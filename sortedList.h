@@ -12,14 +12,19 @@ public:
 	/*default constructor/destructor*/
 	sortedList();
 	~sortedList();
-
+	
+	/*capacity*/
 	bool empty() const;
-	int size() const; 
-	void insert(T& );
-	void remove(T& );
+	int size() const;
 
+	/*modifiers*/
+	void insert(T& );
+	void clear();
+
+	/*operations*/
 	void merge(sortedList<T>&);
 	void sort();
+	void remove(T& );
 
 	sortedList<T>& operator= (const sortedList& );
 
