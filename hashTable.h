@@ -12,11 +12,11 @@ class hashTable {
 	public:
 		hashTable();
 		~hashTable();
-	
+		int size() const;
+		
 	private:
 		vector<sortedList<T> > _vt;
-		
-
+	
 };
 
 #endif /*_HASHTABLE_H*/
