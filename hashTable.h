@@ -32,6 +32,7 @@ class hashTable {
 
 	private:
 		vector<sortedList<T> > _vt;
+		typename vector<sortedList<T> >::const_itr itr;
 };
 
 #endif /*_HASHTABLE_H*/
