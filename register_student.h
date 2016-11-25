@@ -28,6 +28,8 @@ class student{
 		bool isValidYear(int ) const;
 		bool isValidGender(char ) const;
 
+		bool operator==(const student& ) const;//only check key
+
 	private:
 		int StudentID;
 		string StudentName;

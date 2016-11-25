@@ -23,6 +23,8 @@ class course{
 		bool isValidCourseName(string ) const;
 		bool isValidCredit(int ) const;
 
+		bool operator==(const course& ) const; //only check key
+
 	private:
 		string CourseCode;
 		string CourseName;		
