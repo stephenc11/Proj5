@@ -1,7 +1,7 @@
 #ifndef _COURSE_SELECTION_H
 #define _COURSE_SELECTION_H
 
-#include <cstring>
+#include <string>
 #include "hashTable.h"
 #include "sortedList.h"
 
@@ -27,7 +27,9 @@ class registryTable{
 
 	private:
 		sortedList<registryEntry> container;		
-		//two hash Table
+		//two hashTable
+		hashTable<registryEntry* > stu_hash;
+		hashTable<registryEntry* > crs_hash;	
 };
 
 #endif /*_COURSE_SELECTION_H*/
