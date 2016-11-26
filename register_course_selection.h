@@ -44,6 +44,7 @@ class registryTable{
 		~registryTable();
 		
 	private:
+		//container
 		sortedList<registryEntry> container;		
 
 		//two hashTable

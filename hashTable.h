@@ -31,6 +31,7 @@ class hashTable {
 		double load_factor() const;
 
 	private:
+		int bucket_num;
 		vector<sortedList<T> > _vt;
 		typename vector<sortedList<T> >::const_itr itr;
 };
