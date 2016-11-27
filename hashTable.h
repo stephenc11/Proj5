@@ -14,6 +14,8 @@ class hashTable {
 		hashTable();
 		~hashTable();
 	
+		hashTable(int );
+
 		/*capacity*/
 		bool empty() const;
 		int size() const; //return container size
@@ -43,11 +45,17 @@ hashTable<T,Hash>::hashTable()
 	_vt.clear();	
 }
 
-
 template<typename T, typename Hash>
 hashTable<T,Hash>::~hashTable(){
 	bucket_num = -1;
 	_vt.clear();
+}
+
+template<typename T, typename Hash>
+hashTable<T,Hash>::hashTable(int _bkt_num)
+:bucket_num(_bkt_num){
+	_vt.clear();
+	_vt.resize(bucket_num);
 }
 
 template<typename T, typename Hash>
