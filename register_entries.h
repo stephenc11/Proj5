@@ -10,31 +10,31 @@ class student{
 		/*default constructor/destructor*/
 		student();
 		~student();
-	    
-		//Student::Student(_IO_FILE*)
 		
-		student(string& ,string&, string& ,string& );
+		//conversion constructor
+		student(const string& _id,const string& _name,const string& _year,const string& _gender);
 	
-		//student::writeToFile(_IO_FILE*) const
-		
-		int getStudentID() const;
+		string getStudentID() const;
 		string getStudentName() const;
-		int getYear() const;
-		char getGender() const;
+		string getYear() const;
+		string getGender() const;
 
-		void setStudentID(int );
-		void setStudentName(string );
-		void setYear(int );
-		void setGender(char );
+		void setStudentID(const string& );
+		void setStudentName(const string& );
+		void setYear(const string& );
+		void setGender(const string& );
 	
-		bool isValidStudentID(int ) const;
-		bool isValidStudentName(string ) const;
-		bool isValidYear(int ) const;
-		bool isValidGender(char ) const;
-
 		bool operator==(const student& ) const;//only check key
 		bool operator<(const student& ) const;
+		
+		bool isValidStudentID(const string& ) const;
+		bool isValidStudentName(const string& ) const;
+		bool isValidYear(const string& ) const;
+		bool isValidGender(const string& ) const;
 
+		//Student::Student(_IO_FILE*)
+		//student::writeToFile(_IO_FILE*) const
+		
 	private:
 		string StudentID;
 		string StudentName;
@@ -52,26 +52,26 @@ class course{
 
 		string getCourseCode() const;
 		string getCourseName() const;
-		int getCredit() const;
+		string getCredit() const;
 		
-		void setCourseCode(string );
-		void setCourseName(string );
-		void setCredit(int );
-
-		bool isValidCourseCode(string ) const;
-		bool isValidCourseName(string ) const;
-		bool isValidCredit(int ) const;
+		void setCourseCode(const string& );
+		void setCourseName(const string& );
+		void setCredit(const string& );
 
 		bool operator==(const course& ) const; //only check key
 		bool operator<(const course& ) const;	
 		
+		bool isValidCourseCode(const string& ) const;
+		bool isValidCourseName(const string& ) const;
+		bool isValidCredit(const string& ) const;
+
 		//Course(_IO_FILE*)
 		//writeToFile(_IO_FILE*) const
 		
 	private:
 		string CourseCode;
 		string CourseName;		
-		int Credit;
+		string Credit;
 };
 
 
@@ -81,18 +81,14 @@ class record{
 		record();
 		~record();
 
-		int getStudentID() const;
+		string getStudentID() const;
 		string getCourseCode() const;
-		int getExamMark() const;
+		string getExamMark() const;
 
-		void setStudentID(int );
-		void setCourseCode(string );
-		void setExamMark(int );
+		void setStudentID(const string&  );
+		void setCourseCode(const string& );
+		void setExamMark(const string& );
 		
-		
-		bool isValidExamMark() const;
-		 
-
 		//Need to check validity outside of the class
 		
 		//writeToFile(_IO_FILE*) const/
@@ -100,10 +96,12 @@ class record{
 		bool operator==(const record& ) const;
 		bool operator<(const record& ) const;	
 
+		bool isValidExamMark(const string& ) const;
+
 	private:
-		int StudentID;
+		string StudentID;
 		string CourseCode;
-		int ExamMark;				
+		string ExamMark;				
 };
 
 #endif /*_ENTRIES_H*/
