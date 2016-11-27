@@ -30,7 +30,11 @@ class registryEntry{
 		 */
 
 		//Need to check validity outside of the class
-
+		
+		//writeToFile(_IO_FILE*) const/
+	
+		bool operator==(const registryEntry& ) const;
+		bool operator<(const registryEntry& ) const;	
 	private:
 		int StudentID;
 		string CourseCode;
@@ -42,7 +46,34 @@ class registryTable{
 		/*default constructor/destructor*/
 		registryTable();
 		~registryTable();
+	
+		void addStudent(const student&);	
+		void modifyStudent(const student&);
+		void deleteStudent(const string&);
+
+		bool canFindStudent(const string&) const;
+		//void retrieveStudent(const string&, student&) const;
 		
+		void addCourse(const course&);
+		void modifyCourse(const course&);
+	    void deleteCourse(const string&);			
+		
+		bool canFindCourse(const string&) const;	
+		//void retrieveCourse(const string&, course&) const;
+	
+		void addRegistry(const registryEntry& );
+		void deleteRegistry(const registryEntry& );
+		void modifyRegistry(const registryEntry& );
+
+		bool canFindRegistry(const registryEntry& ) const;
+
+		//saveFile(const string& ) const;
+		//loadFile(const string& ) const;
+		//getAllStudents const
+		//getAllCourses const
+
+		
+			
 	private:
 		//container
 		sortedList<registryEntry> container;		

@@ -12,6 +12,12 @@ class student{
 		/*default constructor/destructor*/
 		student();
 		~student();
+	    
+		//Student::Student(_IO_FILE*)
+		
+		student(string& ,string&, string& ,string& );
+	
+		//student::writeToFile(_IO_FILE*) const
 		
 		int getStudentID() const;
 		string getStudentName() const;
@@ -29,12 +35,13 @@ class student{
 		bool isValidGender(char ) const;
 
 		bool operator==(const student& ) const;//only check key
+		bool operator<(const student& ) const;
 
 	private:
-		int StudentID;
+		string StudentID;
 		string StudentName;
-		int Year;
-		char Gender;
+		string Year;
+		string Gender;//M or F
 };
 
 class studentTable{

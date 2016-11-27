@@ -10,6 +10,8 @@ class course{
 	public:
 		course();
 		~course();		
+		
+		course(string&, string& ,string& );
 
 		string getCourseCode() const;
 		string getCourseName() const;
@@ -24,7 +26,11 @@ class course{
 		bool isValidCredit(int ) const;
 
 		bool operator==(const course& ) const; //only check key
-
+		bool operator<(const course& ) const;	
+		
+		//Course(_IO_FILE*)
+		//writeToFile(_IO_FILE*) const
+		
 	private:
 		string CourseCode;
 		string CourseName;		
@@ -35,7 +41,7 @@ class courseTable{
 	public:
 		courseTable();
 		~courseTable();
-
+		
 	private:
 		hashTable<course> crs_container;
 };
