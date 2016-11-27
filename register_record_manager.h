@@ -8,6 +8,24 @@
 
 using std::string;
 
+/*unary hash functions*/
+struct STU_Hasher{
+	int operator() (const student& ) const;
+};
+
+struct CRS_Hasher{
+	int operator() (const course& ) const;
+};
+
+struct RCD_Hasher_stu{
+	int operator() (const record* ) const;
+};
+
+struct RCD_Hasher_crs{
+	int operator() (const record* ) const;
+};
+
+/*record manager class*/
 class recordManager{
 	public:
 		/*default constructor/destructor*/
@@ -44,12 +62,13 @@ class recordManager{
 		sortedList<record> rcd_container; //container of course record		
 
 		//two hashTable
-		hashTable<record* > stu_hash;
-		hashTable<record* > crs_hash;
+		hashTable<record* , RCD_Hasher_stu> stu_hash;
+		hashTable<record* , RCD_Hasher_crs> crs_hash;
 
 		//pointer to student and course data
-		hashTable<student> stu_container;
-		hashTable<course> crs_container;
+		hashTable<student, STU_Hasher> stu_container;
+		hashTable<course, CRS_Hasher> crs_container;
 };
+
 
 #endif /*_RECORD_MANEGER_H*/

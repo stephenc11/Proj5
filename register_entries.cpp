@@ -15,19 +15,8 @@ student::~student(){
 	Gender.clear();	
 }
 
-student::student(const string& _id, const string& _name, const string& _year, const string& _gender){
-	
-	//setStudentID(_id);
-	//setStudentName(_name);
-	//setYear(_year);
-	//setGender(_gender);	
-	//Need to check validity before pass arguments in
-	
-	StudentID = _id;
-	StudentName = _name;
-	Year = _year;
-	Gender = _gender;
-}
+student::student(const string& _id, const string& _name, const string& _year, const string& _gender)
+:StudentID(_id),StudentName(_name),Year(_year),Gender(_gender){}
 
 string student::getStudentID() const{
 	return StudentID;
@@ -114,6 +103,9 @@ course::~course(){
 	CourseName.clear();
 	Credit.clear();	
 }
+
+course::course(const string& _code, const string& _name, const string& _credit)
+:CourseCode(_code),CourseName(_name),Credit(_credit){}
 
 string course::getCourseCode() const{
 	return CourseCode;

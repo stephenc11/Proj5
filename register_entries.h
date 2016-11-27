@@ -48,7 +48,7 @@ class course{
 		course();
 		~course();		
 		
-		course(string&, string& ,string& );
+		course(const string& ,const string& ,const string& );
 
 		string getCourseCode() const;
 		string getCourseName() const;
