@@ -4,8 +4,10 @@
 #include <vector>
 #include <algorithm>
 #include "sortedList.h"
+#include <string>
 
 using std::vector;
+using std::string;
 
 template<typename T, typename Hash>
 class hashTable {
@@ -21,12 +23,12 @@ class hashTable {
 		int size() const; //return container size
 
 		/*modifiers*/
-		void insert(const T& );
+		void insert(const T& , string );
 		void clear();
-		void erase(T );  
+		void erase(string );//Modified by Key  
 
 		/*buckets*/
-		int bucket(const T& ) const;
+		int bucket(string ) const;//Find Bucket by Key
 		int bucket_size(int ) const; //return sortedList size
 		int bucket_count() const;
 		
@@ -34,8 +36,7 @@ class hashTable {
 		double load_factor() const;
 
 		/*element access*/
-		T& at (int );
-		const T& at (int ) const;
+		sortedList<T>& at (string ) const;
 		//access by key
 
 	private:
@@ -81,8 +82,8 @@ int hashTable<T,Hash>::size() const{
 }
 
 template<typename T, typename Hash>
-void hashTable<T,Hash>::insert(const T& _item){
-	int _pos = hashFunc(_item);	
+void hashTable<T,Hash>::insert(const T& _item, string _str){
+	int _pos = hashFunc(_str);	
 	T _elem(_item);
 	_vt[_pos].insert(_elem);	
 }
@@ -93,14 +94,14 @@ void hashTable<T,Hash>::clear(){
 }
 
 template<typename T, typename Hash>
-void hashTable<T,Hash>::erase(T _item){
-	_vt.at(hashFunc(_item)).remove(_item);	
-    		
+void hashTable<T,Hash>::erase(string _str){
+	T _temp(_str); //Create a pseudo object
+	_vt.at(hashFunc(_str)).remove(_temp);		
 }
 
 template<typename T, typename Hash>
-int hashTable<T,Hash>::bucket(const T& _item) const{
-	return hashFunc(_item);
+int hashTable<T,Hash>::bucket(string _str) const{
+	return hashFunc(_str);
 }
 
 template<typename T, typename Hash>
@@ -118,8 +119,10 @@ double hashTable<T,Hash>::load_factor() const{
 	return size()/(double) bucket_num;
 }
 
+/*
 template<typename T, typename Hash>
-T& hashTable<T,Hash>::at(int ){
-	
-}
+T& hashTable<T,Hash>::at(string _str){
+	int _pos = hashFunc(_str);			
+}*/
+
 #endif /*_HASHTABLE_H*/

@@ -10,19 +10,11 @@ using std::string;
 
 /*unary hash functions*/
 struct STU_Hasher{
-	int operator() (const student& ) const;
+	int operator() (const string&  ) const;
 };
 
 struct CRS_Hasher{
-	int operator() (const course& ) const;
-};
-
-struct RCD_Hasher_stu{
-	int operator() (const record* ) const;
-};
-
-struct RCD_Hasher_crs{
-	int operator() (const record* ) const;
+	int operator() (const string& ) const;
 };
 
 /*record manager class*/
@@ -62,8 +54,8 @@ class recordManager{
 		sortedList<record> rcd_container; //container of course record		
 
 		//two hashTable
-		hashTable<record* , RCD_Hasher_stu> stu_hash;
-		hashTable<record* , RCD_Hasher_crs> crs_hash;
+		hashTable<record* , STU_Hasher> stu_hash;
+		hashTable<record* , CRS_Hasher> crs_hash;
 
 		//pointer to student and course data
 		hashTable<student, STU_Hasher> stu_container;

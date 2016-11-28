@@ -18,6 +18,7 @@ class student{
 		string getStudentName() const;
 		string getYear() const;
 		string getGender() const;
+		string getKey() const; //Return Primary Key
 
 		void setStudentID(const string& );
 		void setStudentName(const string& );
@@ -53,7 +54,8 @@ class course{
 		string getCourseCode() const;
 		string getCourseName() const;
 		string getCredit() const;
-		
+		string getKey() const; //Return Primary Key		
+
 		void setCourseCode(const string& );
 		void setCourseName(const string& );
 		void setCredit(const string& );
@@ -83,7 +85,9 @@ class record{
 
 		string getStudentID() const;
 		string getCourseCode() const;
-		string getExamMark() const;
+		string getExamMark() const;	
+		string getKey1() const;//Return Primary Key
+		string getKey2() const;//Return Secondary Key
 
 		void setStudentID(const string&  );
 		void setCourseCode(const string& );
