@@ -33,6 +33,11 @@ class hashTable {
 		/*hash policy*/
 		double load_factor() const;
 
+		/*element access*/
+		T& at (int );
+		const T& at (int ) const;
+		//access by key
+
 	private:
 		int bucket_num; //number of buckets
 		vector<sortedList<T> > _vt;
@@ -61,7 +66,7 @@ hashTable<T,Hash>::hashTable(int _bkt_num)
 
 template<typename T, typename Hash>
 bool hashTable<T,Hash>::empty() const{
-	return _vt.empty(); //Need to check		
+	return (size() == 0); 
 }
 
 template<typename T, typename Hash>
@@ -78,7 +83,8 @@ int hashTable<T,Hash>::size() const{
 template<typename T, typename Hash>
 void hashTable<T,Hash>::insert(const T& _item){
 	int _pos = hashFunc(_item);	
-	_vt[_pos].insert(_item);	
+	T _elem(_item);
+	_vt[_pos].insert(_elem);	
 }
 
 template<typename T, typename Hash>
@@ -88,7 +94,7 @@ void hashTable<T,Hash>::clear(){
 
 template<typename T, typename Hash>
 void hashTable<T,Hash>::erase(T _item){
-	//_vt.at(hashFunc(_item)).find(_item);	
+	_vt.at(hashFunc(_item)).remove(_item);	
     		
 }
 
@@ -112,4 +118,8 @@ double hashTable<T,Hash>::load_factor() const{
 	return size()/(double) bucket_num;
 }
 
+template<typename T, typename Hash>
+T& hashTable<T,Hash>::at(int ){
+	
+}
 #endif /*_HASHTABLE_H*/
