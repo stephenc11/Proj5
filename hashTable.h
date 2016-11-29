@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <string>
 #include <list>
+#include <iostream>
 
 using std::vector;
 using std::string;
@@ -174,7 +175,7 @@ list<T > hashTable<T,Hash>::find(const string& _str) const{
 		}
 		_itr++;
 	}
-
+	//std::cout<<temp.size();
 	return temp;
 };
 

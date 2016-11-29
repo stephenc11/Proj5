@@ -11,6 +11,7 @@ using namespace std;
 
 int main(){
 	//bool quit = false;
+	Menu m;
 	while(1){
 
 		system("clear");
@@ -27,7 +28,7 @@ int main(){
 		cout<<endl;
 		cout<<"Enter your choice (1-6): ";
 
-		Menu m;
+		
 		bool flag = false;
 
 		while(!flag){

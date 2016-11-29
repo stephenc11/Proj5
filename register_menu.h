@@ -55,7 +55,7 @@ void Menu::RunStuMenu(){
 		case 1:
 			InsertStuRcd();
 			return;	
-				
+
 		case 2:
 			ModifyStuRcd();
 			return;

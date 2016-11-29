@@ -47,6 +47,7 @@ recordManager::~recordManager(){
 void recordManager::addStudent(const student& _stu){
 	//Need to check whether entries are valid
 	stu_container.insert(_stu);	
+	//std::cout<<stu_container.size();
 }
 
 void recordManager::modifyStudent(const student& _stu){
@@ -60,7 +61,7 @@ void recordManager::deleteStudent(const string& _str){
 	student temp(_str); //Create pseudo student with only key
 	stu_container.erase(temp);//remove the student in container
 
-	stu_ht.find(_str);//return reg history of that student
+	//stu_ht.find(_str);//return reg history of that student
 
 	list<stuIndex > _temp = stu_ht.find(_str);	
 	list<stuIndex >::iterator l_itr;
