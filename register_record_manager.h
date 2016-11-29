@@ -4,18 +4,17 @@
 #include <string>
 #include <list>
 #include "hashTable.h"
-//#include "sortedList.h"
 #include "register_entries.h"
 
 using std::string;
 
 /*unary hash functions*/
 struct STU_Hasher{
-	int operator() (const string&  );
+	int operator() (const string&  ) const;
 };
 
 struct CRS_Hasher{
-	int operator() (const string& );
+	int operator() (const string& ) const;
 };
 
 /*record manager class*/
@@ -55,8 +54,8 @@ class recordManager{
 		list<record> rcd_container; //container of course record		
 
 		//two hashTables
-		hashTable<stuIndex, STU_Hasher> stu_hash;
-		hashTable<crsIndex, CRS_Hasher> crs_hash;
+		hashTable<stuIndex, STU_Hasher> stu_ht;
+		hashTable<crsIndex, CRS_Hasher> crs_ht;
 
 		//pointer to student and course data
 		hashTable<student, STU_Hasher> stu_container;

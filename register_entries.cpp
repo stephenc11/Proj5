@@ -18,6 +18,12 @@ student::~student(){
 student::student(const string& _id, const string& _name, const string& _year, const string& _gender)
 :StudentID(_id),StudentName(_name),Year(_year),Gender(_gender){}
 
+student::student(const string& _key)
+:StudentID(_key),StudentName(""),Year(""),Gender(""){}
+
+student::student(const student& _stu)
+:StudentID(_stu.StudentID),StudentName(_stu.StudentName),Year(_stu.Year),Gender(_stu.Gender){}
+
 string student::getStudentID() const{
 	return StudentID;
 }
@@ -37,6 +43,7 @@ string student::getGender() const{
 string student::getKey() const{
 	return StudentID; //StudentID as primary key
 }
+
 //Need to valid argument before calling set functions
 
 void student::setStudentID(const string& _id){
@@ -109,6 +116,12 @@ course::~course(){
 
 course::course(const string& _code, const string& _name, const string& _credit)
 :CourseCode(_code),CourseName(_name),Credit(_credit){}
+
+course::course(const string& _key)
+:CourseCode(_key){}
+
+course::course(const course& _crs)
+:CourseCode(_crs.CourseCode),CourseName(_crs.CourseName),Credit(_crs.Credit){}
 
 string course::getCourseCode() const{
 	return CourseCode;
@@ -199,6 +212,12 @@ record::~record(){
 	ExamMark.clear();
 }
 
+record::record(const string& _id, const string& _code, const string& _mark)
+:StudentID(_id),CourseCode(_code),ExamMark(_mark){}
+
+record::record(const record& _rcd)
+:StudentID(_rcd.StudentID),CourseCode(_rcd.CourseCode),ExamMark(_rcd.ExamMark){}
+
 string record::getStudentID() const{
 	return StudentID;
 }
@@ -256,20 +275,25 @@ bool record::isValidExamMark(const string& _mark) const{
 /*Index class*/
 
 Index::Index()
-:_rcd(0),_key(""){}
+:_key(""){}
 
 Index::~Index(){
-	_rcd = 0;
 	_key = "";
 }
 
-Index::Index(record* rcd,string str)
+Index::Index(list<record>::iterator rcd,string str)
 :_rcd(rcd),_key(str){}
+
+Index::Index(const Index& _idx)
+:_rcd(_idx._rcd),_key(_idx._key){}
 
 string Index::getKey() const{
 	return _key;
 }
 
+list<record>::iterator Index::getItr() const{
+	return _rcd;
+}
 bool Index::operator<(const Index& idx) const{
 	return _key.compare(idx._key) < 0;
 }
@@ -288,16 +312,19 @@ stuIndex::stuIndex()
 :Index(){}
 
 stuIndex::~stuIndex(){
-	_rcd = 0;
 	_key = "";
 }
 
-stuIndex::stuIndex(record* rcd, string str)
-:Index(rcd, str){};
+stuIndex::stuIndex(list<record>::iterator rcd, string str)
+:Index(rcd, str){}
+
+stuIndex::stuIndex(const stuIndex& stu_idx)
+:Index(stu_idx){}
 
 string stuIndex::getID() const{
 	return _key;
 }
+
 
 /*crsIndex class*/
 
@@ -305,14 +332,15 @@ crsIndex::crsIndex()
 :Index(){}
 
 crsIndex::~crsIndex(){
-	_rcd = 0;
 	_key = "";
 }
 
-crsIndex::crsIndex(record* rcd, string str)
-:Index(rcd, str){};
+crsIndex::crsIndex(list<record>::iterator rcd, string str)
+:Index(rcd, str){}
+
+crsIndex::crsIndex(const crsIndex& crs_idx)
+:Index(crs_idx){}
 
 string crsIndex::getCode() const{
 	return _key;
 }
-

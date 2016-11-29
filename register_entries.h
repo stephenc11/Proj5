@@ -2,8 +2,10 @@
 #define _ENTRIES_H
 
 #include <string>
+#include <list>
 
 using std::string;
+using std::list;
 
 class student{
 	public:
@@ -13,7 +15,9 @@ class student{
 		
 		//conversion constructor
 		student(const string& _id,const string& _name,const string& _year,const string& _gender);
-	
+		student(const string& _key);
+		student(const student& );
+
 		string getStudentID() const;
 		string getStudentName() const;
 		string getYear() const;
@@ -50,6 +54,8 @@ class course{
 		~course();		
 		
 		course(const string& ,const string& ,const string& );
+		course(const string& _key);
+		course(const course& );
 
 		string getCourseCode() const;
 		string getCourseName() const;
@@ -83,11 +89,12 @@ class record{
 		record();
 		~record();
 
+		record(const string& , const string&, const string& );
+		record(const record& );
+
 		string getStudentID() const;
 		string getCourseCode() const;
 		string getExamMark() const;	
-	//	string getKey1() const;//Return Primary Key
-	//	string getKey2() const;//Return Secondary Key
 
 		void setStudentID(const string&  );
 		void setCourseCode(const string& );
@@ -113,27 +120,31 @@ class Index{
 		Index();
 		~Index();
 		
-		Index(record* ,string );
+		Index(list<record>::iterator ,string );
+		Index(const Index& );
 
 		string getKey() const;
-	
+		list<record>::iterator getItr() const;
+		
 		bool operator< (const Index& ) const; 	
 		bool operator== (const Index& ) const;		
 		void setKey(const string& );
 
 	protected:
-		record* _rcd;
+		list<record>::iterator _rcd;
 		string _key;
 };
 
 /*two derived class of Index*/
+//They are established to represent two Index concepts
 
 class stuIndex : public Index{
 	public:
 		stuIndex();
 		~stuIndex();
 		
-		stuIndex(record* ,string );
+		stuIndex(list<record>::iterator ,string );
+		stuIndex(const stuIndex& );
 
 		string getID() const;
 };
@@ -143,7 +154,8 @@ class crsIndex : public Index{
 		crsIndex();
 		~crsIndex();		
 	
-		crsIndex(record* ,string );
+		crsIndex(list<record>::iterator ,string );
+		crsIndex(const crsIndex& );
 
 		string getCode() const;
 };
