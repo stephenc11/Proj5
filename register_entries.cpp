@@ -204,7 +204,7 @@ bool course::isValidCredit(const string& _credit) {
 /*record class*/
 
 record::record()
-:StudentID(""),CourseCode(""),ExamMark(""){}
+:StudentID(""),CourseCode(""),ExamMark("N/A"){}
 
 record::~record(){
 	StudentID.clear();
@@ -214,6 +214,9 @@ record::~record(){
 
 record::record(const string& _id, const string& _code, const string& _mark)
 :StudentID(_id),CourseCode(_code),ExamMark(_mark){}
+
+record::record(const string& _key1, const string& _key2)
+:StudentID(_key1),CourseCode(_key2),ExamMark("N/A"){}
 
 record::record(const record& _rcd)
 :StudentID(_rcd.StudentID),CourseCode(_rcd.CourseCode),ExamMark(_rcd.ExamMark){}
@@ -253,9 +256,9 @@ bool record::operator<(const record& _rcd) const{
 			  (StudentID.compare(_rcd.StudentID) < 0);
 }
 
-bool record::isValidExamMark(const string& _mark) const{
+bool record::isValidExamMark(const string& _mark){
 	//ExamMark can be unassigned
-	if(_mark.compare("") == 0)
+	if(_mark.compare("N/A") == 0)
 		return true;
 	
 	//_mark should be numerical

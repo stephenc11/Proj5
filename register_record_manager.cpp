@@ -160,20 +160,30 @@ void recordManager::modifyRecord(const record& _rcd){
 
 	list<record>::iterator itr;
 	
+	itr = rcd_container.begin();
+	
 	while (itr!= rcd_container.end()){
-		if (*itr == _rcd){
-			itr++;
+		if ((*itr) == _rcd){
+			break;
 		}
+		else
+			itr++;
 	}
 	
 	itr->setExamMark(_rcd.getExamMark());
-
 }
 
 void recordManager::deleteRecord(const record& _rcd){
 
-	stu_ht.erase(_rcd.getStudentID());
-	crs_ht.erase(_rcd.getCourseCode());
+	list<record>::iterator itr;
+
+	itr = std::find(rcd_container.begin(),rcd_container.end(),_rcd);
+
+	stuIndex sI(itr,_rcd.getStudentID());
+	crsIndex cI(itr, _rcd.getCourseCode());
+
+	stu_ht.erase(sI);
+	crs_ht.erase(cI);
 
 	rcd_container.remove(_rcd);
 
@@ -185,4 +195,13 @@ bool recordManager::canFindRecord(const record& _rcd) const{
 	itr = std::find(rcd_container.begin(),rcd_container.end(), _rcd);
 	return (itr!= rcd_container.end());
 
+}
+
+record recordManager::retrieveRecord(const record& _rcd) const{
+
+	list<record>::const_iterator itr;
+	itr = std::find(rcd_container.begin(),rcd_container.end(), _rcd);
+
+	record rcd(*itr);
+	return rcd;
 }

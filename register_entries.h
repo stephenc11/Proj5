@@ -90,6 +90,7 @@ class record{
 		~record();
 
 		record(const string& , const string&, const string& );
+		record(const string& _key1, const string& _key2);
 		record(const record& );
 
 		string getStudentID() const;
@@ -108,7 +109,7 @@ class record{
 		bool operator<(const record& ) const;	
 		
 		
-		bool isValidExamMark(const string& ) const;
+		static bool isValidExamMark(const string& );
 
 	private:
 		string StudentID;

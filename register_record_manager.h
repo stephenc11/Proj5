@@ -43,7 +43,8 @@ class recordManager{
 		void modifyRecord(const record& );//Can Only Change ExamScore 
 
 		bool canFindRecord(const record& ) const;
-
+		record retrieveRecord(const record& ) const;
+		
 		//saveFile(const string& ) const;
 		//loadFile(const string& ) const;
 		//getAllStudents const

@@ -10,7 +10,7 @@ using namespace std;
 struct Menu{
 	void RunStuMenu();
 	void RunCrsMenu();
-	void RunRegMenu(){};
+	void RunRegMenu();
 	void RunFileMenu(){};
 
 	void InsertStuRcd();
@@ -23,6 +23,11 @@ struct Menu{
 	void DeleteCrsRcd();
 	void QueryCrsRcd();
 
+	void AddCourse();
+	void DropCourse();
+	void ModifyExamMark();
+	void QueryReg();
+
 	string AskforStuName();
 	string AskforYear();
 	string AskforGender();
@@ -30,7 +35,8 @@ struct Menu{
 	string AskforCrsName();
 	string AskforCredit();
 
-	//string AskforMark();
+	string AskforMark();
+	string AskforCrsCode();
 
 	recordManager RcdMng;
 };
@@ -39,8 +45,8 @@ void Menu::RunStuMenu(){
 
 	system("clear");
 
-	cout<<"T Course Registration System  (Student Menu)"<<endl;
-	cout<<"--------------------------------------------"<<endl;
+	cout<<"HKUST Course Registration System  (Student Menu)"<<endl;
+	cout<<"------------------------------------------------"<<endl;
 	cout<<endl;
 	cout<<"1. Insert Student Record"<<endl;
 	cout<<"2. Modify Student Record"<<endl;
@@ -86,8 +92,8 @@ void Menu::RunCrsMenu(){
 
 	system("clear");
 
-	cout<<"T Course Registration System  (Course Menu)"<<endl;
-	cout<<"-------------------------------------------"<<endl;
+	cout<<"HKUST Course Registration System  (Course Menu)"<<endl;
+	cout<<"-----------------------------------------------"<<endl;
 	cout<<endl;
 	cout<<"1. Insert Course Record"<<endl;
 	cout<<"2. Modify Course Record"<<endl;
@@ -118,6 +124,53 @@ void Menu::RunCrsMenu(){
 
 		case 4:
 			QueryCrsRcd();
+			return;
+
+		case 5:			
+			return;
+
+		default:
+			cout<<"Invalid input, re-enter again (1-5): ";
+	}
+	}	
+}
+
+void Menu::RunRegMenu(){
+
+	system("clear");
+
+	cout<<"HKUST Course Registration System  (Registration Menu)"<<endl;
+	cout<<"-----------------------------------------------------"<<endl;
+	cout<<endl;
+	cout<<"1. Add Course"<<endl;
+	cout<<"2. Drop Course"<<endl;
+	cout<<"3. Modify Exam Mark"<<endl;
+	cout<<"4. Query Registration"<<endl;
+	cout<<"5. Go back to main menu"<<endl;
+	cout<<endl;
+	cout<<"Enter your choice (1-5): ";
+	
+	while(1){
+	
+	string choice;
+	getline(cin,choice);
+	int co1 = atoi(choice.c_str()); 
+
+	switch(co1){
+		case 1:
+			AddCourse();
+			return;	
+
+		case 2:
+			DropCourse();
+			return;
+		
+		case 3:
+			ModifyExamMark();
+			return;
+
+		case 4:
+			QueryReg();
 			return;
 
 		case 5:			
@@ -515,6 +568,243 @@ string Menu::AskforCredit(){
 		}
 		else{
 			cout<<"Invalid input, re-enter again [course credit]: ";
+		}
+	}
+}
+
+string Menu::AskforCrsCode(){
+
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(course::isValidCourseName(s)){
+				return s; 	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [course code]: ";
+		}
+	}
+}
+
+string Menu::AskforMark(){
+
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(record::isValidExamMark(s)){
+				return s; 	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [exam mark]: ";
+		}
+	}
+}
+
+void Menu::AddCourse(){
+
+	cout<<"Enter the student ID: ";
+	
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(student::isValidStudentID(s)){
+
+			if (!(RcdMng.canFindStudent(s))) 
+			{
+				cout<<"Student not exist"<<endl;
+				cout<<endl;
+			}
+			else{
+				const string id(s);
+				cout<<"Enter the course code: ";
+				const string code(AskforCrsCode());
+				if(!RcdMng.canFindCourse(code)){
+					cout<<"Course not exist"<<endl;
+					cout<<endl;
+				}
+				else{
+					record rcd(id, code);
+					if(!RcdMng.canFindRecord(rcd)){
+						RcdMng.addRecord(rcd);
+						cout<<"Add course successful"<<endl;
+						cout<<endl;
+					}
+					else{
+						cout<<"Record already exists"<<endl;
+						cout<<endl;
+					}
+				}
+			}
+			cout<<"Hit ENTER to continue..."<<endl;
+			string s;
+			getline(cin,s);
+			return;	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [student ID]: ";
+		}
+	}
+}
+
+void Menu::DropCourse(){
+
+	cout<<"Enter the student ID: ";
+	
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(student::isValidStudentID(s)){
+
+			if (!(RcdMng.canFindStudent(s))) 
+			{
+				cout<<"Student not exist"<<endl;
+				cout<<endl;
+			}
+			else{
+				const string id(s);
+				cout<<"Enter the course code: ";
+				const string code(AskforCrsCode());
+				if(!RcdMng.canFindCourse(code)){
+					cout<<"Course not exist"<<endl;
+					cout<<endl;
+				}
+				else{
+					record rcd(id, code);
+					if(RcdMng.canFindRecord(rcd)){
+						RcdMng.deleteRecord(rcd);
+						cout<<"Drop course successful"<<endl;
+						cout<<endl;
+					}
+					else{
+						cout<<"Record not exist"<<endl;
+						cout<<endl;
+					}
+				}
+			}
+			cout<<"Hit ENTER to continue..."<<endl;
+			string s;
+			getline(cin,s);
+			return;	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [student ID]: ";
+		}
+	}
+}
+
+void Menu::ModifyExamMark(){
+
+	cout<<"Enter the student ID: ";
+	
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(student::isValidStudentID(s)){
+
+			if (!(RcdMng.canFindStudent(s))) 
+			{
+				cout<<"Student not exist"<<endl;
+				cout<<endl;
+			}
+			else{
+				const string id(s);
+				cout<<"Enter the course code: ";
+				const string code(AskforCrsCode());
+				if(!RcdMng.canFindCourse(code)){
+					cout<<"Course not exist"<<endl;
+					cout<<endl;
+				}
+				else{
+					record rcd(id, code);
+					if(RcdMng.canFindRecord(rcd)){
+						record _rcd(RcdMng.retrieveRecord(rcd));
+
+						cout<<"Enter the exam mark ["<<_rcd.getExamMark()<<"]: ";
+						const string mark(AskforMark());
+
+						record __rcd(id,code,mark);
+						RcdMng.modifyRecord(__rcd);
+
+						cout<<"Modification of Exam Mark successful"<<endl;
+						cout<<endl;
+					}
+					else{
+						cout<<"Record not exist"<<endl;
+						cout<<endl;
+					}
+				}
+			}
+			cout<<"Hit ENTER to continue..."<<endl;
+			string s;
+			getline(cin,s);
+			return;	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [student ID]: ";
+		}
+	}
+
+}
+
+void Menu::QueryReg(){
+
+	cout<<"Enter the student ID: ";
+	
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(student::isValidStudentID(s)){
+
+			if (!(RcdMng.canFindStudent(s))) 
+			{
+				cout<<"Student not exist"<<endl;
+				cout<<endl;
+			}
+			else{
+				const string id(s);
+				cout<<"Enter the course code: ";
+				const string code(AskforCrsCode());
+				if(!RcdMng.canFindCourse(code)){
+					cout<<"Course not exist"<<endl;
+					cout<<endl;
+				}
+				else{
+					record rcd(id, code);
+					if(RcdMng.canFindRecord(rcd)){
+
+						record _rcd(RcdMng.retrieveRecord(rcd));
+						cout<<endl;
+						cout<<"Student ID:  "<<_rcd.getStudentID()<<endl;
+						cout<<"Course Code: "<<_rcd.getCourseCode()<<endl;
+						cout<<"Exam Mark:   "<<_rcd.getExamMark()<<endl;
+						cout<<endl;
+
+					}
+					else{
+						cout<<"Record not exist"<<endl;
+						cout<<endl;
+					}
+				}
+			}
+			cout<<"Hit ENTER to continue..."<<endl;
+			string s;
+			getline(cin,s);
+			return;	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [student ID]: ";
 		}
 	}
 }
