@@ -49,8 +49,8 @@ class hashTable {
 
 		int bucket_num; //number of buckets
 		vector<list<T > > _vt;//lists needed to be sorted by key value`
-		typename vector<list<T > >::iterator itr;	
-		typename list<T >::const_iterator _itr;
+		//typename vector<list<T > >::iterator itr;	
+		//typename list<T >::const_iterator _itr;
 		Hash hashFunc;
 };
 
@@ -82,6 +82,8 @@ bool hashTable<T,Hash>::empty() const{
 template<typename T, typename Hash>
 int hashTable<T,Hash>::size() const{
 	int _size = 0;
+	typename vector<list<T> >::const_iterator itr;
+	itr = _vt.begin();
 	while (itr != _vt.end()){
 		_size += (*itr).size();
 		itr++;
@@ -127,6 +129,7 @@ void hashTable<T,Hash>::erase(const T& _item){
 
 template<typename T, typename Hash>
 void hashTable<T,Hash>::erase(const string& _str){
+	typename list<T>::iterator _itr;
 	_itr = _vt.at(hashFunc(_str)).begin();			
 	
 	while(_itr!=_vt[hashFunc(_str)].end()){
@@ -179,14 +182,14 @@ list<T > hashTable<T, Hash>::find(const T& _item) const{
 	int _pos = hashFunc(_item.getKey());	
 
 	list<T > temp;
-
+	typename list<T>::iterator _itr;
 	_itr = _vt[_pos].begin();	
 	while(_itr!=_vt[_pos].end()){
 		if(_item == *_itr){
 			T _temp(*_itr);
 			temp.push_front(_temp);	
 		}
-		itr++;
+		_itr++;
 	}
 
 	return temp;
