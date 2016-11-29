@@ -130,6 +130,11 @@ bool recordManager::canFindCourse(const string& _str) const{
 	return crs_container.canFind(_str);
 }
 
+course recordManager::retrieveCourse(const string& _str) const{
+	course temp(crs_container.find(_str).front());
+	return temp;
+}
+
 void recordManager::addRecord(const record& _rcd){
 	
 	list<record>::iterator itr;

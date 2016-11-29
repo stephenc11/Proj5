@@ -296,7 +296,7 @@ void Menu::InsertCrsRcd(){
 
 			if (RcdMng.canFindCourse(s)) 
 			{
-				cout<<"Student already exists"<<endl;
+				cout<<"Course already exists"<<endl;
 				cout<<endl;
 			}
 
@@ -323,9 +323,120 @@ void Menu::InsertCrsRcd(){
 	}
 }
 
-void Menu::ModifyCrsRcd(){};
-void Menu::DeleteCrsRcd(){};
-void Menu::QueryCrsRcd(){};
+void Menu::ModifyCrsRcd(){
+
+	cout<<"Enter the course code: ";
+	
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(course::isValidCourseCode(s)){
+
+			if (!(RcdMng.canFindCourse(s))) 
+			{
+				cout<<"Course not exist"<<endl;
+				cout<<endl;
+			}
+			else{
+				const string code(s);
+				course crs(RcdMng.retrieveCourse(code));
+
+				cout<<"Enter the course name ["<<crs.getCourseName()<<"]: ";
+				const string name(AskforCrsName());
+
+				cout<<"Enter the credit ["<<crs.getCredit()<<"]: ";
+				const string cred(AskforCredit());
+			
+				course crs1(code,name,cred);
+				RcdMng.modifyCourse(crs1);
+				cout<<"Modification of course record successful"<<endl;
+				cout<<endl;
+			}
+
+			cout<<"Hit ENTER to continue..."<<endl;
+			string s;
+			getline(cin,s);
+			return;	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [course code]: ";
+		}
+	}
+
+}
+
+void Menu::DeleteCrsRcd(){
+	cout<<"Enter the course code: ";
+	
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(course::isValidCourseCode(s)){
+
+			if (!(RcdMng.canFindCourse(s))) 
+			{
+				cout<<"Course not exist"<<endl;
+				cout<<endl;
+			}
+			else{
+				const string code(s);
+				RcdMng.deleteCourse(code);
+				cout<<"Deletion of course record successful"<<endl;
+				cout<<endl;
+			}
+			cout<<"Hit ENTER to continue..."<<endl;
+			string s;
+			getline(cin,s);
+			return;	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [course code]: ";
+		}
+	}
+
+}
+
+void Menu::QueryCrsRcd(){
+
+	cout<<"Enter the course code: ";
+	
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(course::isValidCourseCode(s)){
+
+			if (!(RcdMng.canFindCourse(s))) 
+			{
+				cout<<"Course not exist"<<endl;
+				cout<<endl;
+			}
+			else{
+				const string code(s);
+				course crs(RcdMng.retrieveCourse(code));
+				cout<<endl;
+				cout<<"Code:     "<<crs.getCourseCode()<<endl;
+				cout<<"Name:     "<<crs.getCourseName()<<endl;
+				cout<<"Credit:   "<<crs.getCredit()<<endl;
+				
+				cout<<endl;
+			}
+			cout<<"Hit ENTER to continue..."<<endl;
+			string s;
+			getline(cin,s);
+			return;	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [course code]: ";
+		}
+}
+
+}
 
 string Menu::AskforStuName(){
 	
