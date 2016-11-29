@@ -2,19 +2,20 @@
 #define _RECORD_MANAGER_H
 
 #include <string>
+#include <list>
 #include "hashTable.h"
-#include "sortedList.h"
+//#include "sortedList.h"
 #include "register_entries.h"
 
 using std::string;
 
 /*unary hash functions*/
 struct STU_Hasher{
-	int operator() (const string&  ) const;
+	int operator() (const string&  );
 };
 
 struct CRS_Hasher{
-	int operator() (const string& ) const;
+	int operator() (const string& );
 };
 
 /*record manager class*/
@@ -40,7 +41,7 @@ class recordManager{
 	
 		void addRecord(const record& );
 		void deleteRecord(const record& );
-		void modifyRecord(const record& );
+		void modifyRecord(const record& );//Can Only Change ExamScore 
 
 		bool canFindRecord(const record& ) const;
 
@@ -51,11 +52,11 @@ class recordManager{
 			
 	private:
 		//container
-		sortedList<record> rcd_container; //container of course record		
+		list<record> rcd_container; //container of course record		
 
-		//two hashTable
-		hashTable<record* , STU_Hasher> stu_hash;
-		hashTable<record* , CRS_Hasher> crs_hash;
+		//two hashTables
+		hashTable<stuIndex, STU_Hasher> stu_hash;
+		hashTable<crsIndex, CRS_Hasher> crs_hash;
 
 		//pointer to student and course data
 		hashTable<student, STU_Hasher> stu_container;

@@ -86,8 +86,8 @@ class record{
 		string getStudentID() const;
 		string getCourseCode() const;
 		string getExamMark() const;	
-		string getKey1() const;//Return Primary Key
-		string getKey2() const;//Return Secondary Key
+	//	string getKey1() const;//Return Primary Key
+	//	string getKey2() const;//Return Secondary Key
 
 		void setStudentID(const string&  );
 		void setCourseCode(const string& );
@@ -106,6 +106,46 @@ class record{
 		string StudentID;
 		string CourseCode;
 		string ExamMark;				
+};
+
+class Index{
+	public:
+		Index();
+		~Index();
+		
+		Index(record* ,string );
+
+		string getKey() const;
+	
+		bool operator< (const Index& ) const; 	
+		bool operator== (const Index& ) const;		
+		void setKey(const string& );
+
+	protected:
+		record* _rcd;
+		string _key;
+};
+
+/*two derived class of Index*/
+
+class stuIndex : public Index{
+	public:
+		stuIndex();
+		~stuIndex();
+		
+		stuIndex(record* ,string );
+
+		string getID() const;
+};
+
+class crsIndex : public Index{
+	public:
+		crsIndex();
+		~crsIndex();		
+	
+		crsIndex(record* ,string );
+
+		string getCode() const;
 };
 
 #endif /*_ENTRIES_H*/

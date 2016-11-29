@@ -11,7 +11,9 @@ struct Menu{
 
 	void InsertStuRcd();
 	void ModifyStuRcd(){};
-
+	void DeleteStuRcd(){};
+	void QueryStuRcd(){};
+		
 	//recordManager RcdMng;
 };
 

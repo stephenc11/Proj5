@@ -34,6 +34,9 @@ string student::getGender() const{
 	return Gender;
 }
 
+string student::getKey() const{
+	return StudentID; //StudentID as primary key
+}
 //Need to valid argument before calling set functions
 
 void student::setStudentID(const string& _id){
@@ -82,7 +85,7 @@ bool student::isValidYear(const string& _year) const{
 	std::string::const_iterator it = _year.begin();
 	if (!(std::isdigit(*it)))
 		return false;	
-	else if (std::stoi(_year) > 5 || std::stoi(_year) < 1)
+	else if (std::atoi(_year.c_str()) > 5 || std::atoi(_year.c_str()) < 1)
 		return false;
 	else
 		return true;
@@ -117,6 +120,10 @@ string course::getCourseName() const{
 
 string course::getCredit() const{
 	return Credit;
+}
+
+string course::getKey() const{
+	return CourseCode;//CourseCode as Primary Key  
 }
 
 //Need to check argument's validity before calling set functions
@@ -175,7 +182,7 @@ bool course::isValidCredit(const string& _credit) const{
 
 	if (!std::isdigit(_credit[0]))
 		return false;	
-	else if (std::stoi(_credit) > 5 || std::stoi(_credit) < 0)
+	else if (std::atoi(_credit.c_str()) > 5 || std::atoi(_credit.c_str()) < 0)
 		return false;
 	else
 		return true;
@@ -239,9 +246,73 @@ bool record::isValidExamMark(const string& _mark) const{
 		return false;
 
 	//mark should range from 0 to 100
-	int temp = stoi(_mark);
+	int temp = atoi(_mark.c_str());
 	if (temp < 0 || temp > 100)
 		return false;
 	
 	return true;
 }
+
+/*Index class*/
+
+Index::Index()
+:_rcd(0),_key(""){}
+
+Index::~Index(){
+	_rcd = 0;
+	_key = "";
+}
+
+Index::Index(record* rcd,string str)
+:_rcd(rcd),_key(str){}
+
+string Index::getKey() const{
+	return _key;
+}
+
+bool Index::operator<(const Index& idx) const{
+	return _key.compare(idx._key) < 0;
+}
+
+bool Index::operator==(const Index& idx) const{
+	return _key.compare(idx._key) == 0 && _rcd == idx._rcd; 
+}
+
+void Index::setKey(const string& _str){
+	_key = _str;
+}
+
+/*stuIndex class*/
+
+stuIndex::stuIndex()
+:Index(){}
+
+stuIndex::~stuIndex(){
+	_rcd = 0;
+	_key = "";
+}
+
+stuIndex::stuIndex(record* rcd, string str)
+:Index(rcd, str){};
+
+string stuIndex::getID() const{
+	return _key;
+}
+
+/*crsIndex class*/
+
+crsIndex::crsIndex()
+:Index(){}
+
+crsIndex::~crsIndex(){
+	_rcd = 0;
+	_key = "";
+}
+
+crsIndex::crsIndex(record* rcd, string str)
+:Index(rcd, str){};
+
+string crsIndex::getCode() const{
+	return _key;
+}
+

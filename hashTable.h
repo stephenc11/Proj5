@@ -3,11 +3,12 @@
 
 #include <vector>
 #include <algorithm>
-#include "sortedList.h"
 #include <string>
+#include <list>
 
 using std::vector;
 using std::string;
+using std::list;
 
 template<typename T, typename Hash>
 class hashTable {
@@ -23,7 +24,7 @@ class hashTable {
 		int size() const; //return container size
 
 		/*modifiers*/
-		void insert(const T& , string );
+		void insert(const T& , string );//must maintain sorted
 		void clear();
 		void erase(string );//Modified by Key  
 
@@ -36,13 +37,14 @@ class hashTable {
 		double load_factor() const;
 
 		/*element access*/
-		sortedList<T>& at (string ) const;
+		//list<T>& at (string ) const;
 		//access by key
+		list<T& > find(string ) const;//if list return is empty than cannot find 
 
 	private:
 		int bucket_num; //number of buckets
-		vector<sortedList<T> > _vt;
-		typename vector<sortedList<T> >::const_itr itr;
+		vector<list<T > > _vt;//lists needed to be sorted by key value`
+		typename vector<list<T > >::itr itr;	
 		Hash hashFunc;
 };
 
@@ -57,6 +59,7 @@ hashTable<T,Hash>::~hashTable(){
 	bucket_num = -1;
 	_vt.clear();
 }
+
 
 template<typename T, typename Hash>
 hashTable<T,Hash>::hashTable(int _bkt_num)
@@ -73,7 +76,6 @@ bool hashTable<T,Hash>::empty() const{
 template<typename T, typename Hash>
 int hashTable<T,Hash>::size() const{
 	int _size = 0;
-	itr = _vt.begin();
 	while (itr != _vt.end()){
 		_size += (*itr).size();
 		itr++;
@@ -119,10 +121,11 @@ double hashTable<T,Hash>::load_factor() const{
 	return size()/(double) bucket_num;
 }
 
-/*
-template<typename T, typename Hash>
+/*template<typename T, typename Hash>
 T& hashTable<T,Hash>::at(string _str){
 	int _pos = hashFunc(_str);			
+	_vt(pos)	
 }*/
+
 
 #endif /*_HASHTABLE_H*/
