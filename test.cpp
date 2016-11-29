@@ -50,25 +50,15 @@ int main(){
 
 				break;				
 
-/*
+
 
 			case 2:
 
-				system("clear");
-
-				cout<<"HKUST Course Registration System  (Course Menu)"<<endl;
-				cout<<"-----------------------------------------------"<<endl;
-				cout<<endl;
-				cout<<"1. Insert Course Record"<<endl;
-				cout<<"2. Modify Course Record"<<endl;
-				cout<<"3. Delete Course Record"<<endl;
-				cout<<"4. Query Course Record"<<endl;
-				cout<<"5. Go back to main menu"<<endl;
-				cout<<endl;
-				cout<<"Enter your choice (1-5): ";
+				m.RunCrsMenu();
+				flag = true;
 
 				break;
-
+/*
 			case 3:
 
 				system("clear");	

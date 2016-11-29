@@ -85,6 +85,11 @@ bool recordManager::canFindStudent(const string& _str) const{
 	return stu_container.canFind(_str);
 }
 
+student recordManager::retrieveStudent(const string& _str) const{
+	student temp(stu_container.find(_str).front());
+	return temp;
+}
+
 void recordManager::addCourse(const course& _crs){
 	//Need to check whether entries are valid
 	crs_container.insert(_crs);
@@ -121,15 +126,19 @@ void recordManager::deleteCourse(const string& _crs){
 	}
 }
 
+bool recordManager::canFindCourse(const string& _str) const{
+	return crs_container.canFind(_str);
+}
+
 void recordManager::addRecord(const record& _rcd){
 	
 	list<record>::iterator itr;
 	itr = rcd_container.begin();
 
 	while (itr!= rcd_container.end()){
-		if (*itr < _rcd){
+		if (*itr < _rcd)
 			itr++;
-		}
+		else break;
 	}
 
 	itr = rcd_container.insert(itr, _rcd);
@@ -139,6 +148,7 @@ void recordManager::addRecord(const record& _rcd){
 
 	stu_ht.insert(sI);
 	crs_ht.insert(cI);
+
 }
 
 void recordManager::modifyRecord(const record& _rcd){

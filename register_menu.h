@@ -9,15 +9,20 @@ using namespace std;
 
 struct Menu{
 	void RunStuMenu();
-	void RunCrsMenu(){};
+	void RunCrsMenu();
 	void RunRegMenu(){};
 	void RunFileMenu(){};
 
 	void InsertStuRcd();
 	void ModifyStuRcd();
 	void DeleteStuRcd();
-	void QueryStuRcd(){};
+	void QueryStuRcd();
 	
+	void InsertCrsRcd();
+	void ModifyCrsRcd();
+	void DeleteCrsRcd();
+	void QueryCrsRcd();
+
 	string AskforStuName();
 	string AskforYear();
 	string AskforGender();
@@ -64,9 +69,9 @@ void Menu::RunStuMenu(){
 			DeleteStuRcd();
 			return;
 
-		/*
 		case 4:
-		*/
+			QueryStuRcd();
+			return;
 
 		case 5:			
 			return;
@@ -74,9 +79,55 @@ void Menu::RunStuMenu(){
 		default:
 			cout<<"Invalid input, re-enter again (1-5): ";
 	}
-
 	}	
-};
+}
+
+void Menu::RunCrsMenu(){
+
+	system("clear");
+
+	cout<<"T Course Registration System  (Course Menu)"<<endl;
+	cout<<"-------------------------------------------"<<endl;
+	cout<<endl;
+	cout<<"1. Insert Course Record"<<endl;
+	cout<<"2. Modify Course Record"<<endl;
+	cout<<"3. Delete Course Record"<<endl;
+	cout<<"4. Query Course Record"<<endl;
+	cout<<"5. Go back to main menu"<<endl;
+	cout<<endl;
+	cout<<"Enter your choice (1-5): ";
+	
+	while(1){
+	
+	string choice;
+	getline(cin,choice);
+	int co1 = atoi(choice.c_str()); 
+
+	switch(co1){
+		case 1:
+			InsertCrsRcd();
+			return;	
+
+		case 2:
+			ModifyCrsRcd();
+			return;
+		
+		case 3:
+			DeleteCrsRcd();
+			return;
+
+		case 4:
+			QueryCrsRcd();
+			return;
+
+		case 5:			
+			return;
+
+		default:
+			cout<<"Invalid input, re-enter again (1-5): ";
+	}
+	}	
+}
 
 void Menu::InsertStuRcd(){
 
@@ -137,13 +188,16 @@ void Menu::ModifyStuRcd(){
 			}
 			else{
 				const string id(s);
-				cout<<"Enter the student name: ";
+				student stu(RcdMng.retrieveStudent(id));
+				cout<<"Enter the student name ["<<stu.getStudentName()<<"]: ";
 				const string name(AskforStuName());
+				cout<<"Enter the student year ["<<stu.getYear()<<"]: ";
 				const string year(AskforYear());
+				cout<<"Enter the student gender ["<<stu.getGender()<<"] :";
 				const string gender(AskforGender());
-				student stu(id,name,year,gender);
-				RcdMng.addStudent(stu);
-				cout<<"Creation of student record successful"<<endl;
+				student stu1(id,name,year,gender);
+				RcdMng.modifyStudent(stu1);
+				cout<<"Modification of student record successful"<<endl;
 				cout<<endl;
 			}
 			cout<<"Hit ENTER to continue..."<<endl;
@@ -190,9 +244,91 @@ void Menu::DeleteStuRcd(){
 	}
 }
 
+
+void Menu::QueryStuRcd(){
+	
+	cout<<"Enter the student ID: ";
+	
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(student::isValidStudentID(s)){
+
+			if (!(RcdMng.canFindStudent(s))) 
+			{
+				cout<<"Student not exist"<<endl;
+				cout<<endl;
+			}
+			else{
+				const string id(s);
+				student stu(RcdMng.retrieveStudent(id));
+				cout<<endl;
+				cout<<"ID:     "<<stu.getStudentID()<<endl;
+				cout<<"Name:   "<<stu.getStudentName()<<endl;
+				cout<<"Year:   "<<stu.getYear()<<endl;
+				cout<<"Gender: "<<stu.getGender()<<endl;
+				cout<<endl;
+			}
+			cout<<"Hit ENTER to continue..."<<endl;
+			string s;
+			getline(cin,s);
+			return;	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [student ID]: ";
+		}
+	}	
+
+}
+
+void Menu::InsertCrsRcd(){
+
+	cout<<"Enter the course code: ";
+	
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(course::isValidCourseCode(s)){
+
+			if (RcdMng.canFindCourse(s)) 
+			{
+				cout<<"Student already exists"<<endl;
+				cout<<endl;
+			}
+
+			else{
+				const string code(s);
+				cout<<"Enter the course name: ";
+				const string name(AskforCrsName());
+				cout<<"Enter the course credit [0-5]: ";
+				const string cred(AskforCredit());
+				
+				course crs(code, name, cred);
+				RcdMng.addCourse(crs);
+				cout<<"Creation of course record successful"<<endl;
+				cout<<endl;
+			}
+			cout<<"Hit ENTER to continue..."<<endl;
+			string s;
+			getline(cin,s);
+			return;	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [course code]: ";
+		}
+	}
+}
+
+void Menu::ModifyCrsRcd(){};
+void Menu::DeleteCrsRcd(){};
+void Menu::QueryCrsRcd(){};
+
 string Menu::AskforStuName(){
 	
-
 	while(1){
 		string s;
 		getline(cin,s);
@@ -209,7 +345,6 @@ string Menu::AskforStuName(){
 
 string Menu::AskforYear(){
 	
-
 	while(1){
 		string s;
 		getline(cin,s);
@@ -218,6 +353,7 @@ string Menu::AskforYear(){
 		if(student::isValidYear(s)){
 			return s; 	
 		}
+
 		else{
 			cout<<"Invalid input, re-enter again [student year]: ";
 		}
@@ -226,7 +362,6 @@ string Menu::AskforYear(){
 
 string Menu::AskforGender(){
 	
-
 	while(1){
 		string s;
 		getline(cin,s);
@@ -242,7 +377,6 @@ string Menu::AskforGender(){
 }
 
 string Menu::AskforCrsName(){
-	cout<<"Enter the course name: ";
 
 	while(1){
 		string s;
@@ -259,7 +393,6 @@ string Menu::AskforCrsName(){
 }
 
 string Menu::AskforCredit(){
-	cout<<"Enter the course credit [0-5]: ";
 
 	while(1){
 		string s;

@@ -29,14 +29,14 @@ class recordManager{
 		void deleteStudent(const string&);
 
 		bool canFindStudent(const string&) const;
-		//void retrieveStudent(const string&, student&) const;
+		student retrieveStudent(const string& ) const;
 		
 		void addCourse(const course&);
 		void modifyCourse(const course&);
 	    void deleteCourse(const string&);			
 		
 		bool canFindCourse(const string&) const;	
-		//void retrieveCourse(const string&, course&) const;
+		course retrieveCourse(const string&) const;
 	
 		void addRecord(const record& );
 		void deleteRecord(const record& );
