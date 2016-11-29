@@ -2,27 +2,28 @@
 #include "register_entries.h"
 #include <cstdlib>
 #include <cmath>
+#include <iostream>
 
 /*hash functions*/
 
 int STU_Hasher::operator() (const string& _str) const{
 	//_str must be valid student ID
-	long sum = 0;
-	for (int i = 0; i < 8; i++){
-		sum += (_str[i])*((long)pow(10,i));
+	long long sum = 0;
+	for (int i = 7; i > -1; i--){
+		sum = (_str[i]) + 10 * sum;
 	}	
 	return sum % 29;
 }
 
 int CRS_Hasher::operator() (const string& _str) const{
 	//_str must be valid course code
-	long sum = 0;
-	for (unsigned int i = 0; i < _str.length(); i++){
+	long long sum = 0;
+	for (unsigned int i = _str.length() - 1; i > -1; i--){
 		if(isdigit(_str[i])){
-			sum += (_str[i])*((long)pow(36,i));
+			sum = (_str[i]) + 36 * sum;
 		}
 		if(isupper(_str[i])){
-			sum += (_str[i]-55)*((long)pow(36,i));
+			sum = (_str[i]-55) + 36 * sum;
 		}
 	}
 	return sum % 17;

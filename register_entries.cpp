@@ -70,7 +70,7 @@ bool student::operator<(const student& _stu) const{
 	return StudentID.compare(_stu.StudentID) < 0; 
 }
 
-bool student::isValidStudentID(const string& _id) const{
+bool student::isValidStudentID(const string& _id) {
 	//iterater through _id to see if there is a non-digit character
 	std::string::const_iterator it = _id.begin();
 	while (it != _id.end() && std::isdigit(*it)) ++it;
@@ -78,12 +78,12 @@ bool student::isValidStudentID(const string& _id) const{
 	return (_id.size() == 8) && (it == _id.end());
 }
 
-bool student::isValidStudentName(const string& _name) const{
+bool student::isValidStudentName(const string& _name) {
 	//length of name is between 1 to 32
 	return (_name.size() >= 1) && (_name.size() <= 32);
 }
 
-bool student::isValidYear(const string& _year) const{
+bool student::isValidYear(const string& _year) {
 	//_year should be a numercal string with size 1
 	//its range is {1,2,3,4,5} (including five year program)
 	if (_year.size() != 1)
@@ -98,9 +98,9 @@ bool student::isValidYear(const string& _year) const{
 		return true;
 }
 
-bool student::isValidGender(const string& _gender) const{
+bool student::isValidGender(const string& _gender) {
 	//either Male or Female
-	return (_gender.compare("Male") == 0) || (_gender.compare("Female") == 0);
+	return (_gender.compare("M") == 0) || (_gender.compare("F") == 0);
 }
 
 /*course class*/
@@ -161,7 +161,7 @@ bool course::operator<(const course& _crs) const{
 	return CourseCode.compare(_crs.CourseCode) < 0; 	
 }
 
-bool course::isValidCourseCode(const string& _code) const{
+bool course::isValidCourseCode(const string& _code) {
 	//check whether _code has size from 7 to 9
 	if (_code.size() < 7 || _code.size() > 9)
 		return false;
@@ -183,11 +183,11 @@ bool course::isValidCourseCode(const string& _code) const{
 	return true;	
 }
 
-bool course::isValidCourseName(const string& _name) const{
+bool course::isValidCourseName(const string& _name) {
 	return (_name.size() >= 1) && (_name.size() <= 50);
 }
 
-bool course::isValidCredit(const string& _credit) const{
+bool course::isValidCredit(const string& _credit) {
 	//_credit should be a numercal string with size 1
 	//its range is {0,1,2,3,4,5}
 	if (_credit.size() != 1)

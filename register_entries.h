@@ -32,10 +32,10 @@ class student{
 		bool operator==(const student& ) const;//only check key
 		bool operator<(const student& ) const;
 		
-		bool isValidStudentID(const string& ) const;
-		bool isValidStudentName(const string& ) const;
-		bool isValidYear(const string& ) const;
-		bool isValidGender(const string& ) const;
+		static bool isValidStudentID(const string& ) ;
+		static bool isValidStudentName(const string& ) ;
+		static bool isValidYear(const string& ) ;
+		static bool isValidGender(const string& ) ;
 
 		//Student::Student(_IO_FILE*)
 		//student::writeToFile(_IO_FILE*) const
@@ -69,9 +69,9 @@ class course{
 		bool operator==(const course& ) const; //only check key
 		bool operator<(const course& ) const;	
 		
-		bool isValidCourseCode(const string& ) const;
-		bool isValidCourseName(const string& ) const;
-		bool isValidCredit(const string& ) const;
+		static bool isValidCourseCode(const string& );
+		static bool isValidCourseName(const string& );
+		static bool isValidCredit(const string& );
 
 		//Course(_IO_FILE*)
 		//writeToFile(_IO_FILE*) const

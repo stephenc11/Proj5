@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <iomanip>
 #include "register_menu.h"
+#include "register_record_manager.h"
 
 using namespace std;
 
