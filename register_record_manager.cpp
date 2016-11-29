@@ -94,7 +94,7 @@ void recordManager::modifyCourse(const course& _crs){
 	crs_container.insert(_crs);
 }
 
-/*void recordManager::deleteCourse(const string& _crs){
+void recordManager::deleteCourse(const string& _crs){
 	
 	course temp(_crs); //Create pseudo student with only key
 	crs_container.erase(temp);//remove the student in container
@@ -110,11 +110,14 @@ void recordManager::modifyCourse(const course& _crs){
 	//remove reg history in record container
 	while (l_itr != _temp.end()){
 
+		stuIndex sI(((*l_itr).getItr()), ((*l_itr).getItr())->getStudentID());
+
+		stu_ht.erase(sI);
 		rcd_container.erase((*l_itr).getItr());
 		l_itr++;
 
 	}
-}*/
+}
 
 void recordManager::addRecord(const record& _rcd){
 	
@@ -156,6 +159,7 @@ void recordManager::deleteRecord(const record& _rcd){
 	crs_ht.erase(_rcd.getCourseCode());
 
 	rcd_container.remove(_rcd);
+
 }
 
 bool recordManager::canFindRecord(const record& _rcd) const{

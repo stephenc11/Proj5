@@ -47,6 +47,7 @@ int main(){
 				flag = true;
 
 				break;				
+
 /*
 
 			case 2:
@@ -116,6 +117,7 @@ int main(){
 
 				break;
 */
+
 			case 6:
 				return 0;
 
