@@ -106,8 +106,6 @@ void hashTable<T,Hash>::insert(const T& _item){
 			if (_elem < *_itr)
 				_itr++;
 		}
-		//typename list<T >::iterator __temp;	
-		//__temp = _itr;	
 		_vt.at(_pos).insert(_itr, _elem);
 	}	
 	else{
@@ -132,9 +130,9 @@ void hashTable<T,Hash>::erase(const string& _str){
 	typename list<T>::iterator _itr;
 	_itr = _vt.at(hashFunc(_str)).begin();			
 	
-	while(_itr!=_vt[hashFunc(_str)].end()){
+	while(_itr!=_vt.at(hashFunc(_str)).end()){
 		if(_str.compare((*_itr).getKey())==0){
-			 const T _temp(*_itr);
+			 T _temp(*_itr);
 			 erase(_temp);	
 		}
 		_itr++;
@@ -164,9 +162,11 @@ double hashTable<T,Hash>::load_factor() const{
 template<typename T, typename Hash>
 list<T > hashTable<T,Hash>::find(const string& _str) const{
 	int _pos = hashFunc(_str);	
+
 	list<T> temp;
 	typename list<T >::const_iterator _itr; 
 	_itr = _vt[_pos].begin();	
+
 	while(_itr!=_vt[_pos].end()){
 		if(_str.compare((*_itr).getKey())==0){
 			T _temp(*_itr);
@@ -174,6 +174,7 @@ list<T > hashTable<T,Hash>::find(const string& _str) const{
 		}
 		_itr++;
 	}
+
 	return temp;
 };
 
@@ -182,8 +183,10 @@ list<T > hashTable<T, Hash>::find(const T& _item) const{
 	int _pos = hashFunc(_item.getKey());	
 
 	list<T > temp;
+
 	typename list<T>::iterator _itr;
-	_itr = _vt[_pos].begin();	
+	_itr = _vt[_pos].begin();
+		
 	while(_itr!=_vt[_pos].end()){
 		if(_item == *_itr){
 			T _temp(*_itr);

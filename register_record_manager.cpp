@@ -69,9 +69,99 @@ void recordManager::deleteStudent(const string& _str){
 
 	//remove reg history in record container
 	while (l_itr != _temp.end()){
+		//crs_ht.erase((*((*l_itr).getItr())).getCourseCode());
+		//crsIndex()
+		crsIndex cI(((*l_itr).getItr()), ((*l_itr).getItr())->getCourseCode());
+
+		crs_ht.erase(cI);
 		rcd_container.erase((*l_itr).getItr());
 		l_itr++;
 	}
 }
 
+bool recordManager::canFindStudent(const string& _str) const{
+	return stu_container.canFind(_str);
+}
 
+void recordManager::addCourse(const course& _crs){
+	//Need to check whether entries are valid
+	crs_container.insert(_crs);
+}
+
+void recordManager::modifyCourse(const course& _crs){
+	//Need to make sure canFind course
+	crs_container.erase(_crs);
+	crs_container.insert(_crs);
+}
+
+/*void recordManager::deleteCourse(const string& _crs){
+	
+	course temp(_crs); //Create pseudo student with only key
+	crs_container.erase(temp);//remove the student in container
+
+	crs_ht.find(_crs);//return reg history of that student
+
+	list<crsIndex > _temp = crs_ht.find(_crs);	
+	list<crsIndex >::iterator l_itr;
+	l_itr = _temp.begin();
+	
+	crs_ht.erase(_crs); //Remove all in stu_ht
+
+	//remove reg history in record container
+	while (l_itr != _temp.end()){
+
+		rcd_container.erase((*l_itr).getItr());
+		l_itr++;
+
+	}
+}*/
+
+void recordManager::addRecord(const record& _rcd){
+	
+	list<record>::iterator itr;
+	itr = rcd_container.begin();
+
+	while (itr!= rcd_container.end()){
+		if (*itr < _rcd){
+			itr++;
+		}
+	}
+
+	itr = rcd_container.insert(itr, _rcd);
+
+	stuIndex sI(itr, _rcd.getStudentID());
+	crsIndex cI(itr, _rcd.getCourseCode());
+
+	stu_ht.insert(sI);
+	crs_ht.insert(cI);
+}
+
+void recordManager::modifyRecord(const record& _rcd){
+
+	list<record>::iterator itr;
+	
+	while (itr!= rcd_container.end()){
+		if (*itr == _rcd){
+			itr++;
+		}
+	}
+	
+	itr->setExamMark(_rcd.getExamMark());
+
+}
+
+void recordManager::deleteRecord(const record& _rcd){
+
+	stu_ht.erase(_rcd.getStudentID());
+	crs_ht.erase(_rcd.getCourseCode());
+
+	rcd_container.remove(_rcd);
+}
+
+bool recordManager::canFindRecord(const record& _rcd) const{
+
+	list<record>::const_iterator itr;
+	itr = std::find(rcd_container.begin(),rcd_container.end(), _rcd);
+	return (itr!= rcd_container.end());
+
+}
