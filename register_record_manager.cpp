@@ -18,7 +18,7 @@ int STU_Hasher::operator() (const string& _str) const{
 int CRS_Hasher::operator() (const string& _str) const{
 	//_str must be valid course code
 	long long sum = 0;
-	for (unsigned int i = _str.length() - 1; i > -1; i--){
+	for (int i = _str.length() - 1; i >=0; i--){
 		if(isdigit(_str[i])){
 			sum = (_str[i]) + 36 * sum;
 		}
