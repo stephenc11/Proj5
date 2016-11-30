@@ -11,7 +11,8 @@ struct Menu{
 	void RunStuMenu();
 	void RunCrsMenu();
 	void RunRegMenu();
-	void RunFileMenu(){};
+	void RunRprtMenu();
+	void RunFileMenu();
 
 	void InsertStuRcd();
 	void ModifyStuRcd();
@@ -181,6 +182,43 @@ void Menu::RunRegMenu(){
 	}
 	}	
 }
+
+void Menu::RunFileMenu(){
+	
+	system("clear");
+
+	cout<<"HKUST Course Registration System  (File Menu)"<<endl;
+	cout<<"---------------------------------------------"<<endl;
+	cout<<endl;
+	cout<<"1. Save Database"<<endl;
+	cout<<"2. Load Database"<<endl;
+	cout<<"3. Go back to main menu"<<endl;
+	cout<<endl;
+	cout<<"Enter your choice (1-3): ";
+
+	while(1){
+	
+	string choice;
+	getline(cin,choice);
+	int co1 = atoi(choice.c_str()); 
+
+	switch(co1){
+		case 1:
+
+			return;
+		case 2:
+
+			return;
+
+		case 3:
+			return;
+
+		default:
+			cout<<"Invalid input, re-enter again (1-3): ";
+	}
+	}
+}
+
 
 void Menu::InsertStuRcd(){
 

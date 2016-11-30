@@ -63,6 +63,7 @@ int main(){
 				flag = true;
 				
 				break;	
+
 /*
 			case 4:
 
@@ -81,6 +82,7 @@ int main(){
 
 				break;
 
+*/
 			case 5:
 				system("clear");
 
@@ -94,7 +96,6 @@ int main(){
 				cout<<"Enter your choice (1-3): "<<endl;
 
 				break;
-*/
 
 			case 6:
 				return 0;
