@@ -157,11 +157,8 @@ void recordManager::addRecord(const record& _rcd){
 	}
 
 	record rcd(_rcd);
-	if (itr == rcd_container.end())
-		//record rcd(_rcd);
-		rcd_container.push_back(rcd);
-	else
-		itr = rcd_container.insert(itr, rcd);
+	
+	itr = rcd_container.insert(itr, rcd);
 
 	stuIndex sI(itr, _rcd.getStudentID());
 	crsIndex cI(itr, _rcd.getCourseCode());
@@ -340,7 +337,7 @@ void recordManager::rprtAllStudents(const string& _str) const{
 	printCrsHeader(myfile, retrieveCourse(_str));
 
 	//Call print Functions
-	list<crsIndex > temp(crs_ht.find(_str)); //reportStudent on everyeone
+	list<crsIndex > temp = crs_ht.find(_str); //reportStudent on everyeone
 
 	//if empty
 	if (temp.empty()){
@@ -362,7 +359,16 @@ void recordManager::rprtAllStudents(const string& _str) const{
 		itr = temp.begin();
 
 		while(itr!=temp.end()){
-			retrieveStudent((itr->getItr())->getStudentID()).reportStudent(myfile);
+			
+			list<record>::iterator _itr;
+			_itr = itr->getItr();
+
+			string cc = _itr->getStudentID();
+
+			retrieveStudent(cc).reportStudent(myfile);
+
+			fprintf(myfile,"<TD>"); fprintf(myfile,"%s",_itr->getExamMark().c_str());fprintf(myfile,"</TD>\n");
+
 			fprintf(myfile,"</TR>\n\n");
 			itr++;
 		}
@@ -393,7 +399,7 @@ void recordManager::rprtAllCourses(const string& _str) const{
 	printStuHeader(myfile, retrieveStudent(_str));
 
 	//Call print Functions
-	list<stuIndex > temp(stu_ht.find(_str)); //reportStudent on everyeone
+	list<stuIndex > temp = stu_ht.find(_str); //reportStudent on everyeone
 
 	//if empty
 	if (temp.empty()){
@@ -401,12 +407,13 @@ void recordManager::rprtAllCourses(const string& _str) const{
 	}
 	//if not empty
 	else{
+
 		fprintf(myfile,"<TABLE cellSpacing=1 cellPadding=1 border=1>\n\n");
+		
 		fprintf(myfile,"<TR>\n");
 		fprintf(myfile,"<TD>Course Code</TD>\n");
 		fprintf(myfile,"<TD>Course Name</TD>\n");
 		fprintf(myfile,"<TD>Credit</TD>\n");
-		//fprintf(myfile,"<TD>Gender</TD>\n");
 		fprintf(myfile,"<TD>Exam Mark</TD>\n");
 		fprintf(myfile,"</TR>\n\n");
 
@@ -414,7 +421,19 @@ void recordManager::rprtAllCourses(const string& _str) const{
 		itr = temp.begin();
 
 		while(itr!=temp.end()){
-			retrieveCourse((itr->getItr())->getCourseCode()).reportCourse(myfile);
+
+			//course crs( retrieveCourse((itr->getItr())->getCourseCode()) );
+			//crs.reportCourse(myfile);
+
+			list<record>::iterator _itr;
+			_itr = itr->getItr();
+
+			string cc = _itr->getCourseCode();
+
+			retrieveCourse(cc).reportCourse(myfile);
+
+			fprintf(myfile,"<TD>"); fprintf(myfile,"%s",_itr->getExamMark().c_str());fprintf(myfile,"</TD>\n");
+
 			fprintf(myfile,"</TR>\n\n");
 			itr++;
 		}
