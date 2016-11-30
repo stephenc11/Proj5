@@ -219,6 +219,50 @@ void Menu::RunFileMenu(){
 	}
 }
 
+void Menu::RunRprtMenu(){
+	
+	system("clear");
+				
+	cout<<"HKUST Course Registration System  (Report Generation Menu)"<<endl;
+	cout<<"----------------------------------------------------------"<<endl;
+	cout<<endl;
+	cout<<"1. List all student information"<<endl;
+	cout<<"2. List all course information"<<endl;
+	cout<<"3. List all courses of a student"<<endl;
+	cout<<"4. List all students of a course"<<endl;
+	cout<<"5. Go back to main menu"<<endl;
+	cout<<endl;
+	cout<<"Enter your choice (1-5): ";
+
+	while(1){
+	
+	string choice;
+	getline(cin,choice);
+	int co1 = atoi(choice.c_str()); 
+
+	switch(co1){
+		case 1:
+
+			return;
+		case 2:
+
+			return;
+
+		case 3:
+			return;
+
+		case 4:
+
+			return;
+
+		case 5:
+			return;
+
+		default:
+			cout<<"Invalid input, re-enter again (1-5): ";
+	}
+	}
+}
 
 void Menu::InsertStuRcd(){
 
@@ -334,7 +378,6 @@ void Menu::DeleteStuRcd(){
 		}
 	}
 }
-
 
 void Menu::QueryStuRcd(){
 	
@@ -525,7 +568,7 @@ void Menu::QueryCrsRcd(){
 		else{
 			cout<<"Invalid input, re-enter again [course code]: ";
 		}
-}
+	}
 
 }
 

@@ -64,36 +64,19 @@ int main(){
 				
 				break;	
 
-/*
+
 			case 4:
 
-				system("clear");
-				
-				cout<<"HKUST Course Registration System  (Report Generation Menu)"<<endl;
-				cout<<"----------------------------------------------------------"<<endl;
-				cout<<endl;
-				cout<<"1. List all student information"<<endl;
-				cout<<"2. List all course information"<<endl;
-				cout<<"3. List all courses of a student"<<endl;
-				cout<<"4. List all students of a course"<<endl;
-				cout<<"5. Go back to main menu"<<endl;
-				cout<<endl;
-				cout<<"Enter your choice (1-5): ";
+				m.RunRprtMenu();
+				flag = true;
 
 				break;
 
-*/
-			case 5:
-				system("clear");
 
-				cout<<"HKUST Course Registration System  (File Menu)"<<endl;
-				cout<<"---------------------------------------------"<<endl;
-				cout<<endl;
-				cout<<"1. Save Database"<<endl;
-				cout<<"2. Load Database"<<endl;
-				cout<<"3. Go back to main menu"<<endl;
-				cout<<endl;
-				cout<<"Enter your choice (1-3): "<<endl;
+			case 5:
+				
+				m.RunFileMenu();
+				flag = true;
 
 				break;
 

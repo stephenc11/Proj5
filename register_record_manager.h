@@ -47,6 +47,7 @@ class recordManager{
 		
 		//saveFile(const string& ) const;
 		//loadFile(const string& ) const;
+		
 		//getAllStudents const
 		//getAllCourses const	
 			

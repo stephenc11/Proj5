@@ -108,7 +108,6 @@ class record{
 		bool operator==(const record& ) const;
 		bool operator<(const record& ) const;	
 		
-		
 		static bool isValidExamMark(const string& );
 
 	private:
