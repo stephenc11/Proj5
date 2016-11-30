@@ -3,6 +3,8 @@
 
 #include <string>
 #include <list>
+#include <iostream>
+#include <fstream>
 
 using std::string;
 using std::list;
@@ -37,7 +39,7 @@ class student{
 		static bool isValidYear(const string& ) ;
 		static bool isValidGender(const string& ) ;
 
-		//Student::Student(_IO_FILE*)
+		void reportStudent(_IO_FILE*) const;
 		//student::writeToFile(_IO_FILE*) const
 		
 	private:
@@ -73,7 +75,7 @@ class course{
 		static bool isValidCourseName(const string& );
 		static bool isValidCredit(const string& );
 
-		//Course(_IO_FILE*)
+		void reportCourse(_IO_FILE*) const;
 		//writeToFile(_IO_FILE*) const
 		
 	private:
@@ -104,7 +106,8 @@ class record{
 		//Need to check validity outside of the class
 		
 		//writeToFile(_IO_FILE*) const/
-	
+		//void reportRecord(_IO_FILE* ) const; 
+
 		bool operator==(const record& ) const;
 		bool operator<(const record& ) const;	
 		
@@ -131,6 +134,8 @@ class Index{
 		bool operator== (const Index& ) const;		
 		void setKey(const string& );
 
+		//void report(IO_FILE* ) const;
+
 	protected:
 		list<record>::iterator _rcd;
 		string _key;
@@ -148,6 +153,7 @@ class stuIndex : public Index{
 		stuIndex(const stuIndex& );
 
 		string getID() const;
+		void report(_IO_FILE* ) const;
 };
 
 class crsIndex : public Index{
@@ -159,6 +165,7 @@ class crsIndex : public Index{
 		crsIndex(const crsIndex& );
 
 		string getCode() const;
+		void report(_IO_FILE* ) const;
 };
 
 #endif /*_ENTRIES_H*/

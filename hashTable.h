@@ -7,9 +7,7 @@
 #include <list>
 #include <iostream>
 
-using std::vector;
-using std::string;
-using std::list;
+using namespace std;
 
 template<typename T, typename Hash>
 class hashTable {
@@ -45,6 +43,8 @@ class hashTable {
 		list<T > find(const T& ) const;
 		bool canFind(const T& ) const;
 		bool canFind(const string& ) const;
+
+		list<T > getAll() const;
 
 	private:
 
@@ -104,13 +104,16 @@ void hashTable<T,Hash>::insert(const T& _item){
 	if (_itr != _vt[_pos].end()){
 		while(_itr != _vt[_pos].end()){
 			//find the position to insert and ensure the list is sorted
-			if (_elem < *_itr)
+			if (*_itr < _elem)
 				_itr++;
+			break;
 		}
-		_vt.at(_pos).insert(_itr, _elem);
+		//cout<<"iiiiiiiiiiiiiiiiiiiiiiii"<<endl;
+		_vt[_pos].insert(_itr, _elem);
 	}	
 	else{
-		_vt.at(_pos).push_front(_elem);
+		//cout<<"jjjjjjjjjjjjjjjj"<<endl;
+		_vt[_pos].push_front(_elem);
 	}
 }
 
@@ -132,11 +135,20 @@ void hashTable<T,Hash>::erase(const string& _str){
 	_itr = _vt.at(hashFunc(_str)).begin();			
 	
 	while(_itr!=_vt.at(hashFunc(_str)).end()){
+		typename list<T>::iterator temp_it;
+			 temp_it = ++_itr;
+			 --_itr;
 		if(_str.compare((*_itr).getKey())==0){
+			 //typename list<T>::iterator temp_it;
+			 //temp_it = ++_itr;
+
 			 T _temp(*_itr);
-			 erase(_temp);	
+			 erase(_temp);
+
+			 //_itr = temp_it;	
 		}
-		_itr++;
+		//_itr++;
+		_itr = temp_it;
 	}
 }
 
@@ -175,9 +187,9 @@ list<T > hashTable<T,Hash>::find(const string& _str) const{
 		}
 		_itr++;
 	}
-	//std::cout<<temp.size();
+
 	return temp;
-};
+}
 
 template<typename T, typename Hash>
 list<T > hashTable<T, Hash>::find(const T& _item) const{
@@ -201,12 +213,36 @@ list<T > hashTable<T, Hash>::find(const T& _item) const{
 
 template<typename T, typename Hash>
 bool hashTable<T, Hash>::canFind(const T& _item) const{
-	return 	(!find(_item).empty());
+	return 	(!(find(_item).empty()));
 }
 
 template<typename T, typename Hash>
 bool hashTable<T, Hash>::canFind(const string& _str) const{
-	return (!find(_str).empty());
+	return 	(!(find(_str).empty()));
+}
+
+template<typename T, typename Hash>
+list<T > hashTable<T,Hash>::getAll() const{
+
+	list<T> temp;
+	typename list<T >::const_iterator _itr; 
+
+	for (int _pos = 0; _pos < bucket_count(); _pos++){
+	//int _pos = hashFunc(_str);	
+
+		_itr = _vt[_pos].begin();	
+
+		while(_itr!=_vt[_pos].end()){
+			//if(_str.compare((*_itr).getKey())==0){
+				T _temp(*_itr);
+				temp.push_front(_temp);	
+			//}
+				_itr++;
+		}
+	}
+
+	temp.sort();
+	return temp;
 }
 
 #endif /*_HASHTABLE_H*/

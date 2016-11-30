@@ -10,7 +10,7 @@
 using namespace std;
 
 int main(){
-	//bool quit = false;
+	
 	Menu m;
 	while(1){
 
@@ -37,11 +37,8 @@ int main(){
 			getline(cin, choice);	
 			
 			int co = std::atoi(choice.c_str());
-			
-			/*if(choice.compare("6")==0)
-				quit = true;*/
 
-		switch(co){
+			switch(co){
 			
 			case 1:
 			
@@ -64,14 +61,12 @@ int main(){
 				
 				break;	
 
-
 			case 4:
 
 				m.RunRprtMenu();
 				flag = true;
 
 				break;
-
 
 			case 5:
 				
@@ -85,11 +80,8 @@ int main(){
 
 			default:
 				cout<<"Invalid input, re-enter again (1-6): ";		
-		}		
-
+			}		
+		}
 	}
-		//quit = true;
-	}
-
 	return 0;
 }

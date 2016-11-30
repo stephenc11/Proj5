@@ -103,6 +103,15 @@ bool student::isValidGender(const string& _gender) {
 	return (_gender.compare("M") == 0) || (_gender.compare("F") == 0);
 }
 
+void student::reportStudent(_IO_FILE* f) const{
+	fprintf(f, "<TR>\n");
+	fprintf(f, "<TD>"); fprintf(f,"%s",StudentID.c_str()); fprintf(f, "</TD>\n");
+	fprintf(f, "<TD>"); fprintf(f,"%s",StudentName.c_str()); fprintf(f, "</TD>\n");
+	fprintf(f, "<TD>"); fprintf(f,"%s",Year.c_str()); fprintf(f, "</TD>\n");
+	fprintf(f, "<TD>"); fprintf(f,"%s",Gender.c_str()); fprintf(f, "</TD>\n");
+}
+
+
 /*course class*/
 
 course::course()
@@ -201,6 +210,15 @@ bool course::isValidCredit(const string& _credit) {
 		return true;
 }
 
+void course::reportCourse(_IO_FILE* f) const{
+	fprintf(f, "<TR>\n");
+	fprintf(f, "<TD>"); fprintf(f,"%s",CourseCode.c_str()); fprintf(f, "</TD>\n");
+	fprintf(f, "<TD>"); fprintf(f,"%s",CourseName.c_str()); fprintf(f, "</TD>\n");
+	fprintf(f, "<TD>"); fprintf(f,"%s",Credit.c_str()); fprintf(f, "</TD>\n");
+	
+
+}
+
 /*record class*/
 
 record::record()
@@ -246,8 +264,7 @@ void record::setExamMark(const string& _mark){
 }
 
 bool record::operator==(const record& _rcd) const{
-	return (StudentID.compare(_rcd.StudentID) == 0) && \
-			(CourseCode.compare(_rcd.CourseCode) == 0);	
+	return (StudentID.compare(_rcd.StudentID) == 0) && (CourseCode.compare(_rcd.CourseCode) == 0);	
 }
 
 bool record::operator<(const record& _rcd) const{
@@ -346,4 +363,8 @@ crsIndex::crsIndex(const crsIndex& crs_idx)
 
 string crsIndex::getCode() const{
 	return _key;
+}
+
+void crsIndex::report(_IO_FILE* f) const{
+
 }

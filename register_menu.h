@@ -8,6 +8,7 @@ using namespace std;
 
 
 struct Menu{
+
 	void RunStuMenu();
 	void RunCrsMenu();
 	void RunRegMenu();
@@ -38,6 +39,7 @@ struct Menu{
 
 	string AskforMark();
 	string AskforCrsCode();
+	string AskforStuID();
 
 	recordManager RcdMng;
 };
@@ -242,18 +244,20 @@ void Menu::RunRprtMenu(){
 
 	switch(co1){
 		case 1:
-
+			RcdMng.rprtAllStudents();
 			return;
 		case 2:
-
+			RcdMng.rprtAllCourses();
 			return;
 
 		case 3:
-		
+			cout<<"Enter the student ID: ";
+			RcdMng.rprtAllCourses(AskforStuID());
 			return;
 
 		case 4:
-
+			cout<<"Enter the course code: ";
+			RcdMng.rprtAllStudents(AskforCrsCode());
 			return;
 
 		case 5:
@@ -686,6 +690,21 @@ string Menu::AskforMark(){
 	}
 }
 
+string Menu::AskforStuID(){
+	while(1){
+		string s;
+		getline(cin,s);
+	
+		//check whether valid
+		if(student::isValidStudentID(s)){
+				return s; 	
+		}
+		else{
+			cout<<"Invalid input, re-enter again [exam mark]: ";
+		}
+	}
+}
+
 void Menu::AddCourse(){
 
 	cout<<"Enter the student ID: ";
@@ -702,17 +721,21 @@ void Menu::AddCourse(){
 				cout<<"Student not exist"<<endl;
 				cout<<endl;
 			}
-			else{
+			else
+			{
 				const string id(s);
 				cout<<"Enter the course code: ";
-				const string code(AskforCrsCode());
-				if(!RcdMng.canFindCourse(code)){
+				string temp = AskforCrsCode();
+				const string code(temp);
+				//cout<<"asdasdasd"<<endl;
+				if(!(RcdMng.canFindCourse(code))){
 					cout<<"Course not exist"<<endl;
 					cout<<endl;
 				}
 				else{
+					//cout<<"hihihihihihihhi"<<endl;
 					record rcd(id, code);
-					if(!RcdMng.canFindRecord(rcd)){
+					if(!(RcdMng.canFindRecord(rcd))){
 						RcdMng.addRecord(rcd);
 						cout<<"Add course successful"<<endl;
 						cout<<endl;
@@ -872,7 +895,6 @@ void Menu::QueryReg(){
 						cout<<"Course Code: "<<_rcd.getCourseCode()<<endl;
 						cout<<"Exam Mark:   "<<_rcd.getExamMark()<<endl;
 						cout<<endl;
-
 					}
 					else{
 						cout<<"Record not exist"<<endl;

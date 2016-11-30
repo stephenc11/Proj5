@@ -47,10 +47,12 @@ class recordManager{
 		
 		//saveFile(const string& ) const;
 		//loadFile(const string& ) const;
+
+		void rprtAllStudents() const;
+		void rprtAllCourses() const;
+		void rprtAllStudents(const string& ) const; //report All students in a course
+		void rprtAllCourses(const string& )	const; //report All courses for a student
 		
-		//getAllStudents const
-		//getAllCourses const	
-			
 	private:
 		//container
 		list<record> rcd_container; //container of course record		
