@@ -1,8 +1,4 @@
-#include <vector>
-#include <list>
 #include <iostream>
-#include <algorithm>
-#include <cstdlib>
 #include "register_menu.h"
 #include "register_record_manager.h"
 
