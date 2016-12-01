@@ -68,7 +68,6 @@ void recordManager::deleteStudent(const string& _str){
 
 	//stu_ht.find(_str);//return reg history of that student
 	
-
 	list<stuIndex > _temp (stu_ht.find(_str));	
 
 	list<stuIndex >::iterator l_itr;
@@ -109,30 +108,42 @@ void recordManager::modifyCourse(const course& _crs){
 }
 
 void recordManager::deleteCourse(const string& _crs){
-	
-	//course temp(_crs); //Create pseudo student with only key
-	crs_container.erase(_crs);//remove the student in container
+
 
 	//crs_ht.find(_crs);//return reg history of that student
 
 	list<crsIndex > _temp = crs_ht.find(_crs);	
 
-	list<crsIndex >::iterator l_itr;
-	l_itr = _temp.begin();
-	
-	crs_ht.erase(_crs); //Remove all in crs_ht
+	if (_temp.empty()){
 
-	//remove reg history in record container
-	while (l_itr != _temp.end()){
+		//list<crsIndex >::iterator l_itr;
 
-		stuIndex sI((l_itr->getItr()), (l_itr->getItr())->getStudentID());
+		//l_itr = _temp.begin();
 
-		stu_ht.erase(sI);
+		crs_container.erase(_crs);//remove the course in container
 
-		rcd_container.erase((*l_itr).getItr());
-		l_itr++;
+		//crs_ht.erase(_crs); //Remove all in crs_ht
+
+		//remove reg history in record container
+		//while (l_itr != _temp.end()){
+
+		//stuIndex sI((l_itr->getItr()), (l_itr->getItr())->getStudentID());
+
+		//stu_ht.erase(sI);
+
+		//rcd_container.erase((*l_itr).getItr());
+		//l_itr++;
+		cout<<"Deletion of course record successful"<<endl;
+		cout<<endl;
+		return;
+	}
+	else {
+		cout<<"Some students already registered in this course, deletion fail"<<endl;
+		cout<<endl;
+		return;
 	}
 }
+
 
 bool recordManager::canFindCourse(const string& _str) const{
 	return crs_container.canFind(_str);
@@ -524,6 +535,8 @@ void recordManager::saveFile() const{
 		rcd_itr++;
 	}
 
+	fclose(myfile);
+
 	cout <<"Saving Successful"<<endl;
 	cout<<endl;
 	cout <<"Hit ENTER to continue..."<<endl;
@@ -552,6 +565,12 @@ void recordManager::loadFile() {
 
 		return;
 	}
+
+	stu_container.clear();
+	crs_container.clear();
+	stu_ht.clear();
+	crs_ht.clear();
+	rcd_container.clear();
 
 	string c_temp1, c_temp2, c_temp3, c_temp4;
 
@@ -590,6 +609,8 @@ void recordManager::loadFile() {
 		}
 		else break;
 	}
+
+	fin.close();
 
 	cout <<"Loading Successful"<<endl;
 	cout<<endl;

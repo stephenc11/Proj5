@@ -85,14 +85,14 @@ bool student::isValidStudentName(const string& _name) {
 
 bool student::isValidYear(const string& _year) {
 	//_year should be a numercal string with size 1
-	//its range is {1,2,3,4,5} (including five year program)
+	//its range is {1,2,3} 
 	if (_year.size() != 1)
 		return false;
 
 	std::string::const_iterator it = _year.begin();
 	if (!(std::isdigit(*it)))
 		return false;	
-	else if (std::atoi(_year.c_str()) > 5 || std::atoi(_year.c_str()) < 1)
+	else if (std::atoi(_year.c_str()) > 3 || std::atoi(_year.c_str()) < 1)
 		return false;
 	else
 		return true;
@@ -108,7 +108,13 @@ void student::reportStudent(_IO_FILE* f) const{
 	fprintf(f, "<TD>"); fprintf(f,"%s",StudentID.c_str()); fprintf(f, "</TD>\n");
 	fprintf(f, "<TD>"); fprintf(f,"%s",StudentName.c_str()); fprintf(f, "</TD>\n");
 	fprintf(f, "<TD>"); fprintf(f,"%s",Year.c_str()); fprintf(f, "</TD>\n");
-	fprintf(f, "<TD>"); fprintf(f,"%s",Gender.c_str()); fprintf(f, "</TD>\n");
+
+	if (Gender == "M"){
+		fprintf(f, "<TD>"); fprintf(f,"%s","Male"); fprintf(f, "</TD>\n");
+	}
+	else{
+		fprintf(f, "<TD>"); fprintf(f,"%s","Female"); fprintf(f, "</TD>\n");
+	}
 }
 
 void student::writeToFile(_IO_FILE* f) const{
@@ -177,8 +183,8 @@ bool course::operator<(const course& _crs) const{
 }
 
 bool course::isValidCourseCode(const string& _code) {
-	//check whether _code has size from 7 to 9
-	if (_code.size() < 7 || _code.size() > 9)
+	//check whether _code has size from 7 to 8
+	if (_code.size() < 7 || _code.size() > 8)
 		return false;
 		
 	//iterate through _code to see if it contains upper letters or digits only

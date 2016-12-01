@@ -119,7 +119,13 @@ void hashTable<T,Hash>::insert(const T& _item){
 
 template<typename T, typename Hash>
 void hashTable<T,Hash>::clear(){
-	_vt.clear();		
+	typename vector<list<T> >::iterator itr;
+	itr = _vt.begin();
+	while (itr != _vt.end()){
+		itr->clear();
+		itr++;
+	}
+	//_vt.clear();		
 }
 
 template<typename T, typename Hash>

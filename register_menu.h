@@ -208,6 +208,7 @@ void Menu::RunFileMenu(){
 		case 1:
 			RcdMng.saveFile();
 			return;
+			
 		case 2:
 			RcdMng.loadFile();
 			return;
@@ -282,7 +283,7 @@ void Menu::InsertStuRcd(){
 
 			if (RcdMng.canFindStudent(s)) 
 			{
-				cout<<"Student already exists"<<endl;
+				cout<<"Student already exist"<<endl;
 				cout<<endl;
 			}
 
@@ -407,7 +408,10 @@ void Menu::QueryStuRcd(){
 				cout<<"ID:     "<<stu.getStudentID()<<endl;
 				cout<<"Name:   "<<stu.getStudentName()<<endl;
 				cout<<"Year:   "<<stu.getYear()<<endl;
-				cout<<"Gender: "<<stu.getGender()<<endl;
+				if (stu.getGender().compare("M")==0)
+					cout<<"Gender: "<<"Male"<<endl;
+				else 
+					cout<<"Gender: "<<"Female"<<endl;
 				cout<<endl;
 			}
 			cout<<"Hit ENTER to continue..."<<endl;
@@ -435,7 +439,7 @@ void Menu::InsertCrsRcd(){
 
 			if (RcdMng.canFindCourse(s)) 
 			{
-				cout<<"Course already exists"<<endl;
+				cout<<"Course already exist"<<endl;
 				cout<<endl;
 			}
 
@@ -485,7 +489,7 @@ void Menu::ModifyCrsRcd(){
 				cout<<"Enter the course name ["<<crs.getCourseName()<<"]: ";
 				const string name(AskforCrsName());
 
-				cout<<"Enter the credit ["<<crs.getCredit()<<"]: ";
+				cout<<"Enter the course credit ["<<crs.getCredit()<<"]: ";
 				const string cred(AskforCredit());
 			
 				course crs1(code,name,cred);
@@ -523,9 +527,15 @@ void Menu::DeleteCrsRcd(){
 			}
 			else{
 				const string code(s);
+				//if (crs_ht.canFind(code)){
+				//	cout<<"Some students already registered in this course, deletion fail"<<endl;
+				//	cout<<endl;
+				//}
+				//else{
 				RcdMng.deleteCourse(code);
-				cout<<"Deletion of course record successful"<<endl;
-				cout<<endl;
+				//	cout<<"Deletion of course record successful"<<endl;
+				//	cout<<endl;
+				//}
 			}
 			cout<<"Hit ENTER to continue..."<<endl;
 			string s;
@@ -559,9 +569,9 @@ void Menu::QueryCrsRcd(){
 				const string code(s);
 				course crs(RcdMng.retrieveCourse(code));
 				cout<<endl;
-				cout<<"Code:     "<<crs.getCourseCode()<<endl;
-				cout<<"Name:     "<<crs.getCourseName()<<endl;
-				cout<<"Credit:   "<<crs.getCredit()<<endl;
+				cout<<"Code    "<<crs.getCourseCode()<<endl;
+				cout<<"Name:   "<<crs.getCourseName()<<endl;
+				cout<<"Credit: "<<crs.getCredit()<<endl;
 				
 				cout<<endl;
 			}
@@ -741,7 +751,7 @@ void Menu::AddCourse(){
 						cout<<endl;
 					}
 					else{
-						cout<<"Record already exists"<<endl;
+						cout<<"The student already registered the course"<<endl;
 						cout<<endl;
 					}
 				}
@@ -840,7 +850,7 @@ void Menu::ModifyExamMark(){
 						record __rcd(id,code,mark);
 						RcdMng.modifyRecord(__rcd);
 
-						cout<<"Modification of Exam Mark successful"<<endl;
+						cout<<"Modification of exam mark successful"<<endl;
 						cout<<endl;
 					}
 					else{
@@ -897,7 +907,7 @@ void Menu::QueryReg(){
 						cout<<endl;
 					}
 					else{
-						cout<<"Record not exist"<<endl;
+						cout<<"The registration record not exist"<<endl;
 						cout<<endl;
 					}
 				}
