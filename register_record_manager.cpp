@@ -566,6 +566,7 @@ void recordManager::loadFile() {
 		return;
 	}
 
+	
 	stu_container.clear();
 	crs_container.clear();
 	stu_ht.clear();
