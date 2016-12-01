@@ -40,28 +40,34 @@ class recordManager{
 	
 		void addRecord(const record& );
 		void deleteRecord(const record& );
-		void modifyRecord(const record& );//Can Only Change ExamScore 
+		void modifyRecord(const record& );//Change ExamScore 
 
 		bool canFindRecord(const record& ) const;
 		record retrieveRecord(const record& ) const;
 		
+		/*IO with database*/
 		void saveFile() const;
 		void loadFile();
+		//test loading and return validity
+		bool testLoad(const string& ) const;	
 
+		//report All students
 		void rprtAllStudents() const;
+		//report All courses
 		void rprtAllCourses() const;
-		void rprtAllStudents(const string& ) const; //report All students in a course
-		void rprtAllCourses(const string& )	const; //report All courses for a student
-		
+		//report All students in a course
+		void rprtAllStudents(const string& ) const; 
+		//report All courses for a student
+		void rprtAllCourses(const string& )	const; 		
+
 	private:
 		//container
-		list<record> rcd_container; //container of course record		
-
-		//two hashTables
+		list<record> rcd_container; //container of course enrollment record		
+		//two hashTables of Indices
 		hashTable<stuIndex, STU_Hasher> stu_ht;
 		hashTable<crsIndex, CRS_Hasher> crs_ht;
 
-		//pointer to student and course data
+		//containers of student and course data
 		hashTable<student, STU_Hasher> stu_container;
 		hashTable<course, CRS_Hasher> crs_container;
 };

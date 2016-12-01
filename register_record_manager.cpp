@@ -13,6 +13,7 @@ using namespace std;
 
 int STU_Hasher::operator() (const string& _str) const{
 	//_str must be valid student ID
+	//use long long to avoid overflowing
 	long long sum = 0;
 	for (int i = 7; i > -1; i--){
 		sum = (_str[i]) + 10 * sum;
@@ -22,6 +23,7 @@ int STU_Hasher::operator() (const string& _str) const{
 
 int CRS_Hasher::operator() (const string& _str) const{
 	//_str must be valid course code
+	//use long long avoid overflowing
 	long long sum = 0;
 	for (int i = _str.length() - 1; i >=0; i--){
 		if(isdigit(_str[i])){
@@ -52,7 +54,6 @@ recordManager::~recordManager(){
 void recordManager::addStudent(const student& _stu){
 	//Need to check whether entries are valid
 	stu_container.insert(_stu);	
-	//std::cout<<stu_container.size();
 }
 
 void recordManager::modifyStudent(const student& _stu){
@@ -63,12 +64,9 @@ void recordManager::modifyStudent(const student& _stu){
 
 void recordManager::deleteStudent(const string& _str){
 	
-	//student temp(_str); //Create pseudo student with only key
 	stu_container.erase(_str);//remove the student in container
 
-	//stu_ht.find(_str);//return reg history of that student
-	
-	list<stuIndex > _temp (stu_ht.find(_str));	
+	list<stuIndex > _temp (stu_ht.find(_str));//return reg history of that student
 
 	list<stuIndex >::iterator l_itr;
 	l_itr = _temp.begin();
@@ -108,48 +106,36 @@ void recordManager::modifyCourse(const course& _crs){
 }
 
 void recordManager::deleteCourse(const string& _crs){
-
-
-	//crs_ht.find(_crs);//return reg history of that student
-
+	
+	//Find record of course enrollment
 	list<crsIndex > _temp = crs_ht.find(_crs);	
 
+	//Only delete course if no student enrolled
 	if (_temp.empty()){
-
-		//list<crsIndex >::iterator l_itr;
-
-		//l_itr = _temp.begin();
 
 		crs_container.erase(_crs);//remove the course in container
 
-		//crs_ht.erase(_crs); //Remove all in crs_ht
-
-		//remove reg history in record container
-		//while (l_itr != _temp.end()){
-
-		//stuIndex sI((l_itr->getItr()), (l_itr->getItr())->getStudentID());
-
-		//stu_ht.erase(sI);
-
-		//rcd_container.erase((*l_itr).getItr());
-		//l_itr++;
 		cout<<"Deletion of course record successful"<<endl;
 		cout<<endl;
+
 		return;
 	}
 	else {
+
 		cout<<"Some students already registered in this course, deletion fail"<<endl;
 		cout<<endl;
+
 		return;
 	}
 }
-
 
 bool recordManager::canFindCourse(const string& _str) const{
 	return crs_container.canFind(_str);
 }
 
 course recordManager::retrieveCourse(const string& _str) const{
+	//In this case, crs_container is a one to one map,
+	//only one element will be returned in a list
 	course temp(crs_container.find(_str).front());
 	return temp;
 }
@@ -218,13 +204,11 @@ bool recordManager::canFindRecord(const record& _rcd) const{
 
 	while (itr != rcd_container.end())
 	{
-		//cout<<"asdfasdfjkljkl"<<endl;
 		if(_rcd == *itr)
 			break;
 		itr++;
-		//cout<<"asdfasdfasdfas"<<endl;
 	}
-	//itr = std::find(rcd_container.begin(),rcd_container.end(), _rcd);
+
 	return (!(itr == rcd_container.end()));
 }
 
@@ -236,6 +220,8 @@ record recordManager::retrieveRecord(const record& _rcd) const{
 	record rcd(*itr);
 	return rcd;
 }
+
+/*Report Handlers*/
 
 void recordManager::rprtAllStudents() const{
 	FILE* myfile;
@@ -455,9 +441,6 @@ void recordManager::rprtAllCourses(const string& _str) const{
 
 		while(itr!=temp.end()){
 
-			//course crs( retrieveCourse((itr->getItr())->getCourseCode()) );
-			//crs.reportCourse(myfile);
-
 			list<record>::iterator _itr;
 			_itr = itr->getItr();
 
@@ -487,6 +470,8 @@ void recordManager::rprtAllCourses(const string& _str) const{
 
 	return;
 }
+
+/*database IO handlers*/
 
 void recordManager::saveFile() const{
 
@@ -518,17 +503,20 @@ void recordManager::saveFile() const{
 	crs_itr = crs_temp.begin();
 	rcd_itr = rcd_container.begin();
 
+	//output student table
 	while(stu_itr != stu_temp.end()){
 		stu_itr->writeToFile(myfile);
 		stu_itr++;
 	}
 
+	//output course table
 	fprintf(myfile,"\n");
 	while(crs_itr != crs_temp.end()){
 		crs_itr->writeToFile(myfile);
 		crs_itr++;
 	} 
 
+	//output registration table
 	fprintf(myfile,"\n");
 	while(rcd_itr != rcd_container.end()){
 		rcd_itr->writeToFile(myfile);
@@ -547,7 +535,9 @@ void recordManager::saveFile() const{
 }
 
 void recordManager::loadFile() {
-
+	
+	bool isValid = true;
+		
 	cout<<"Enter the file name: ";
 	string s;
 	getline(cin, s);
@@ -565,59 +555,175 @@ void recordManager::loadFile() {
 
 		return;
 	}
-
 	
-	stu_container.clear();
-	crs_container.clear();
-	stu_ht.clear();
-	crs_ht.clear();
-	rcd_container.clear();
+	/*Test Run*/
+	isValid = testLoad(s);
+
+	/*Actual Run*/
+	if (isValid){
+
+		stu_container.clear();
+		crs_container.clear();
+		stu_ht.clear();
+		crs_ht.clear();
+		rcd_container.clear();
+
+		string c_temp1, c_temp2, c_temp3, c_temp4;
+
+		//load student table
+		while(1){
+			getline(fin,c_temp1);
+			if(c_temp1.size() != 0){
+				getline(fin,c_temp2);
+				getline(fin,c_temp3);
+				getline(fin,c_temp4);
+				student stu(c_temp1, c_temp2, c_temp3, c_temp4);
+				addStudent(stu);
+			}
+			else break;
+		}
+
+		//load course table
+		while(1){
+			getline(fin,c_temp1);
+			if(c_temp1.size() != 0){
+				getline(fin,c_temp2);
+				getline(fin,c_temp3);
+				course crs(c_temp1, c_temp2, c_temp3);
+				addCourse(crs);
+			}
+			else break;
+		}
+
+		//load registration table
+		while(1){
+			getline(fin,c_temp1);
+			if(c_temp1.size() != 0){
+				getline(fin,c_temp2);
+				getline(fin,c_temp3);
+				record rcd(c_temp1, c_temp2, c_temp3);
+				addRecord(rcd);
+			}
+			else break;
+		}
+
+		fin.close();
+
+		cout <<"Loading Successful"<<endl;
+		cout<<endl;
+		cout <<"Hit ENTER to continue..."<<endl;
+
+		getline(cin, s);
+
+		return;
+	}
+	else{
+	
+		cout <<"Error: Load File Error (File not exist / File Corrupted / Incorrect Format)"<<endl;
+		cout<<endl;
+		cout <<"Hit ENTER to continue..."<<endl;
+
+		getline(cin, s);
+
+		return;
+	
+	}
+}
+
+bool recordManager::testLoad(const string& filename) const{
+	
+	ifstream fin;
+	fin.open(filename.c_str());
 
 	string c_temp1, c_temp2, c_temp3, c_temp4;
 
+	//test student table
 	while(1){
 		getline(fin,c_temp1);
+
 		if(c_temp1.size() != 0){
+
+			if (!student::isValidStudentID(c_temp1)){
+				fin.close();
+				return false;
+			}
+
 			getline(fin,c_temp2);
+			if(!student::isValidStudentName(c_temp2)){
+				fin.close();
+				return false;
+			}
+
 			getline(fin,c_temp3);
+			if(!student::isValidYear(c_temp3)){
+				fin.close();
+				return false;
+			}
+
 			getline(fin,c_temp4);
-			student stu(c_temp1, c_temp2, c_temp3, c_temp4);
-			addStudent(stu);
+			if(!student::isValidGender(c_temp4)){
+				fin.close();
+				return false;
+			}
+
 		}
 		else break;
 	}
 
+	//test course table
 	while(1){
 		getline(fin,c_temp1);
+
 		if(c_temp1.size() != 0){
+
+			if (!course::isValidCourseCode(c_temp1)){
+				fin.close();
+				return false;
+			}
+
 			getline(fin,c_temp2);
+			if(!course::isValidCourseName(c_temp2)){
+				fin.close();
+				return false;
+			}
+
 			getline(fin,c_temp3);
-			//getline(fin,c_temp4);
-			course crs(c_temp1, c_temp2, c_temp3);
-			addCourse(crs);
+			if(!course::isValidCredit(c_temp3)){
+				fin.close();
+				return false;
+			}
+
 		}
 		else break;
 	}
-
+	
+	//test registration table
 	while(1){
 		getline(fin,c_temp1);
+
 		if(c_temp1.size() != 0){
+
+			if (!student::isValidStudentID(c_temp1)){
+				fin.close();
+				return false;
+			}
+
 			getline(fin,c_temp2);
+			if(!course::isValidCourseCode(c_temp2)){
+				fin.close();
+				return false;
+			}
+
 			getline(fin,c_temp3);
-			//getline(fin,c_temp4);
-			record rcd(c_temp1, c_temp2, c_temp3);
-			addRecord(rcd);
+			if(!record::isValidExamMark(c_temp3)){
+				fin.close();
+				return false;
+			}
+
 		}
 		else break;
 	}
 
-	fin.close();
-
-	cout <<"Loading Successful"<<endl;
-	cout<<endl;
-	cout <<"Hit ENTER to continue..."<<endl;
-
-	getline(cin, s);
-
-	return;
+	fin.close();	
+	return true;
 }

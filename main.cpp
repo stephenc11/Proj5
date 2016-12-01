@@ -3,7 +3,6 @@
 #include <iostream>
 #include <algorithm>
 #include <cstdlib>
-#include <iomanip>
 #include "register_menu.h"
 #include "register_record_manager.h"
 
@@ -12,8 +11,9 @@ using namespace std;
 int main(){
 	
 	Menu m;
-	while(1){
 
+	while(1){
+		//Show main menu
 		system("clear");
 		cout<<"HKUST Course Registration System"<<endl;
 		cout<<"--------------------------------"<<endl;
@@ -28,7 +28,6 @@ int main(){
 		cout<<endl;
 		cout<<"Enter your choice (1-6): ";
 
-		
 		bool flag = false;
 
 		while(!flag){
@@ -83,5 +82,4 @@ int main(){
 			}		
 		}
 	}
-	return 0;
 }

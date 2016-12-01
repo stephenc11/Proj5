@@ -15,9 +15,11 @@ class student{
 		student();
 		~student();
 		
-		//conversion constructor
+		//conversion constructors
 		student(const string& _id,const string& _name,const string& _year,const string& _gender);
 		student(const string& _key);
+
+		//copy constructor
 		student(const student& );
 
 		string getStudentID() const;
@@ -31,7 +33,7 @@ class student{
 		void setYear(const string& );
 		void setGender(const string& );
 	
-		bool operator==(const student& ) const;//only check key
+		bool operator==(const student& ) const;
 		bool operator<(const student& ) const;
 		
 		static bool isValidStudentID(const string& ) ;
@@ -46,17 +48,21 @@ class student{
 		string StudentID;
 		string StudentName;
 		string Year;
-		string Gender;//M or F
+		string Gender;
 };
 
 
 class course{
 	public:
+		/*default constructor/destructor*/
 		course();
 		~course();		
 		
+		//conversion constructors	
 		course(const string& ,const string& ,const string& );
 		course(const string& _key);
+
+		//copy constructor
 		course(const course& );
 
 		string getCourseCode() const;
@@ -68,7 +74,7 @@ class course{
 		void setCourseName(const string& );
 		void setCredit(const string& );
 
-		bool operator==(const course& ) const; //only check key
+		bool operator==(const course& ) const;
 		bool operator<(const course& ) const;	
 		
 		static bool isValidCourseCode(const string& );
@@ -102,16 +108,13 @@ class record{
 		void setStudentID(const string&  );
 		void setCourseCode(const string& );
 		void setExamMark(const string& );
-		
-		//Need to check validity outside of the class
-		
-		void writeToFile(_IO_FILE*) const;
-		//void reportRecord(_IO_FILE* ) const; 
 
 		bool operator==(const record& ) const;
 		bool operator<(const record& ) const;	
 		
 		static bool isValidExamMark(const string& );
+
+		void writeToFile(_IO_FILE*) const;
 
 	private:
 		string StudentID;
@@ -127,14 +130,13 @@ class Index{
 		Index(list<record>::iterator ,string );
 		Index(const Index& );
 
+		void setKey(const string& );
+
 		string getKey() const;
 		list<record>::iterator getItr() const;
 		
 		bool operator< (const Index& ) const; 	
 		bool operator== (const Index& ) const;		
-		void setKey(const string& );
-
-		//void report(IO_FILE* ) const;
 
 	protected:
 		list<record>::iterator _rcd;
@@ -153,7 +155,6 @@ class stuIndex : public Index{
 		stuIndex(const stuIndex& );
 
 		string getID() const;
-		void report(_IO_FILE* ) const;
 };
 
 class crsIndex : public Index{
@@ -165,7 +166,6 @@ class crsIndex : public Index{
 		crsIndex(const crsIndex& );
 
 		string getCode() const;
-		void report(_IO_FILE* ) const;
 };
 
 #endif /*_ENTRIES_H*/

@@ -5,6 +5,7 @@
 
 /*student class*/
 
+//constructors and destructor
 student::student()
 :StudentID(""),StudentName(""),Year(""),Gender(""){}
 
@@ -24,6 +25,7 @@ student::student(const string& _key)
 student::student(const student& _stu)
 :StudentID(_stu.StudentID),StudentName(_stu.StudentName),Year(_stu.Year),Gender(_stu.Gender){}
 
+//Get functions
 string student::getStudentID() const{
 	return StudentID;
 }
@@ -44,8 +46,8 @@ string student::getKey() const{
 	return StudentID; //StudentID as primary key
 }
 
+//Set functions
 //Need to valid argument before calling set functions
-
 void student::setStudentID(const string& _id){
 		StudentID = _id;
 }
@@ -62,6 +64,7 @@ void student::setGender(const string& _gender){
 		Gender = _gender;
 }
 
+//operators overloaded
 bool student::operator==(const student& _stu) const{
 	return StudentID.compare(_stu.StudentID) == 0;
 }
@@ -70,6 +73,7 @@ bool student::operator<(const student& _stu) const{
 	return StudentID.compare(_stu.StudentID) < 0; 
 }
 
+//static functions for validity checking
 bool student::isValidStudentID(const string& _id) {
 	//iterater through _id to see if there is a non-digit character
 	std::string::const_iterator it = _id.begin();
@@ -90,6 +94,7 @@ bool student::isValidYear(const string& _year) {
 		return false;
 
 	std::string::const_iterator it = _year.begin();
+	
 	if (!(std::isdigit(*it)))
 		return false;	
 	else if (std::atoi(_year.c_str()) > 3 || std::atoi(_year.c_str()) < 1)
@@ -99,10 +104,11 @@ bool student::isValidYear(const string& _year) {
 }
 
 bool student::isValidGender(const string& _gender) {
-	//either Male or Female
+	//either M or F
 	return (_gender.compare("M") == 0) || (_gender.compare("F") == 0);
 }
 
+//IO Functions
 void student::reportStudent(_IO_FILE* f) const{
 	fprintf(f, "<TR>\n");
 	fprintf(f, "<TD>"); fprintf(f,"%s",StudentID.c_str()); fprintf(f, "</TD>\n");
@@ -126,6 +132,7 @@ void student::writeToFile(_IO_FILE* f) const{
 
 /*course class*/
 
+//constructors and destructor
 course::course()
 :CourseCode(""),CourseName(""),Credit(""){}
 
@@ -144,6 +151,7 @@ course::course(const string& _key)
 course::course(const course& _crs)
 :CourseCode(_crs.CourseCode),CourseName(_crs.CourseName),Credit(_crs.Credit){}
 
+//Get functions
 string course::getCourseCode() const{
 	return CourseCode;
 }
@@ -160,8 +168,8 @@ string course::getKey() const{
 	return CourseCode;//CourseCode as Primary Key  
 }
 
+//Set Functions
 //Need to check argument's validity before calling set functions
-
 void course::setCourseCode(const string& _code){
 	CourseCode = _code;	
 }
@@ -174,6 +182,7 @@ void course::setCredit(const string& _credit){
 	Credit = _credit;
 }
 
+//operators overloaded
 bool course::operator==(const course& _crs) const{
 	return CourseCode.compare(_crs.CourseCode) == 0;
 }
@@ -182,6 +191,7 @@ bool course::operator<(const course& _crs) const{
 	return CourseCode.compare(_crs.CourseCode) < 0; 	
 }
 
+//static functions to check validity
 bool course::isValidCourseCode(const string& _code) {
 	//check whether _code has size from 7 to 8
 	if (_code.size() < 7 || _code.size() > 8)
@@ -222,6 +232,7 @@ bool course::isValidCredit(const string& _credit) {
 		return true;
 }
 
+//IO Functions
 void course::reportCourse(_IO_FILE* f) const{
 	fprintf(f, "<TR>\n");
 	fprintf(f, "<TD>"); fprintf(f,"%s",CourseCode.c_str()); fprintf(f, "</TD>\n");
@@ -237,6 +248,7 @@ void course::writeToFile(_IO_FILE* f) const{
 
 /*record class*/
 
+//contructors and destructor
 record::record()
 :StudentID(""),CourseCode(""),ExamMark("N/A"){}
 
@@ -255,6 +267,7 @@ record::record(const string& _key1, const string& _key2)
 record::record(const record& _rcd)
 :StudentID(_rcd.StudentID),CourseCode(_rcd.CourseCode),ExamMark(_rcd.ExamMark){}
 
+//Get Functions
 string record::getStudentID() const{
 	return StudentID;
 }
@@ -267,6 +280,7 @@ string record::getExamMark() const{
 	return ExamMark;
 }
 
+//Set Functions
 void record::setStudentID(const string& _id){
 	StudentID = _id;
 }
@@ -279,18 +293,22 @@ void record::setExamMark(const string& _mark){
 	ExamMark = _mark;
 }
 
+//operators overloaded
 bool record::operator==(const record& _rcd) const{
 	return (StudentID.compare(_rcd.StudentID) == 0) && (CourseCode.compare(_rcd.CourseCode) == 0);	
 }
 
 bool record::operator<(const record& _rcd) const{
+	//The order is primarily determined by student ID and then by course code
 	return (StudentID.compare(_rcd.StudentID) == 0) ? \
 		      (CourseCode.compare(_rcd.CourseCode) < 0) :\
 			  (StudentID.compare(_rcd.StudentID) < 0);
 }
 
+//static function to check validity
 bool record::isValidExamMark(const string& _mark){
 	//ExamMark can be unassigned
+	//to facilitate Database loading
 	if(_mark.compare("N/A") == 0)
 		return true;
 	
@@ -308,15 +326,16 @@ bool record::isValidExamMark(const string& _mark){
 	return true;
 }
 
+//IO Function
 void record::writeToFile(_IO_FILE* f) const{
 	fprintf(f,"%s",StudentID.c_str()); fprintf(f, "\n");
 	fprintf(f,"%s",CourseCode.c_str()); fprintf(f, "\n");
 	fprintf(f,"%s",ExamMark.c_str()); fprintf(f, "\n");
-	//fprintf(f,"%s",Gender.c_str()); fprintf(f, "\n");
 }
 
 /*Index class*/
 
+//constructors and desctructor
 Index::Index()
 :_key(""){}
 
@@ -338,6 +357,7 @@ list<record>::iterator Index::getItr() const{
 	return _rcd;
 }
 
+//operators overloaded
 bool Index::operator<(const Index& idx) const{
 	return _key.compare(idx._key) < 0;
 }
@@ -387,8 +407,4 @@ crsIndex::crsIndex(const crsIndex& crs_idx)
 
 string crsIndex::getCode() const{
 	return _key;
-}
-
-void crsIndex::report(_IO_FILE* f) const{
-
 }
