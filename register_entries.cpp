@@ -111,6 +111,12 @@ void student::reportStudent(_IO_FILE* f) const{
 	fprintf(f, "<TD>"); fprintf(f,"%s",Gender.c_str()); fprintf(f, "</TD>\n");
 }
 
+void student::writeToFile(_IO_FILE* f) const{
+	fprintf(f,"%s",StudentID.c_str()); fprintf(f, "\n");
+	fprintf(f,"%s",StudentName.c_str()); fprintf(f, "\n");
+	fprintf(f,"%s",Year.c_str()); fprintf(f, "\n");
+	fprintf(f,"%s",Gender.c_str()); fprintf(f, "\n");
+}
 
 /*course class*/
 
@@ -215,8 +221,12 @@ void course::reportCourse(_IO_FILE* f) const{
 	fprintf(f, "<TD>"); fprintf(f,"%s",CourseCode.c_str()); fprintf(f, "</TD>\n");
 	fprintf(f, "<TD>"); fprintf(f,"%s",CourseName.c_str()); fprintf(f, "</TD>\n");
 	fprintf(f, "<TD>"); fprintf(f,"%s",Credit.c_str()); fprintf(f, "</TD>\n");
-	
+}
 
+void course::writeToFile(_IO_FILE* f) const{
+    fprintf(f,"%s",CourseCode.c_str()); fprintf(f, "\n");
+	fprintf(f,"%s",CourseName.c_str()); fprintf(f, "\n");
+	fprintf(f,"%s",Credit.c_str()); fprintf(f, "\n");
 }
 
 /*record class*/
@@ -292,6 +302,13 @@ bool record::isValidExamMark(const string& _mark){
 	return true;
 }
 
+void record::writeToFile(_IO_FILE* f) const{
+	fprintf(f,"%s",StudentID.c_str()); fprintf(f, "\n");
+	fprintf(f,"%s",CourseCode.c_str()); fprintf(f, "\n");
+	fprintf(f,"%s",ExamMark.c_str()); fprintf(f, "\n");
+	//fprintf(f,"%s",Gender.c_str()); fprintf(f, "\n");
+}
+
 /*Index class*/
 
 Index::Index()
@@ -314,6 +331,7 @@ string Index::getKey() const{
 list<record>::iterator Index::getItr() const{
 	return _rcd;
 }
+
 bool Index::operator<(const Index& idx) const{
 	return _key.compare(idx._key) < 0;
 }

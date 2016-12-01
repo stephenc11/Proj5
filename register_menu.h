@@ -206,10 +206,10 @@ void Menu::RunFileMenu(){
 
 	switch(co1){
 		case 1:
-
+			RcdMng.saveFile();
 			return;
 		case 2:
-
+			RcdMng.loadFile();
 			return;
 
 		case 3:

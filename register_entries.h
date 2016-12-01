@@ -40,7 +40,7 @@ class student{
 		static bool isValidGender(const string& ) ;
 
 		void reportStudent(_IO_FILE*) const;
-		//student::writeToFile(_IO_FILE*) const
+		void writeToFile(_IO_FILE*) const;
 		
 	private:
 		string StudentID;
@@ -76,7 +76,7 @@ class course{
 		static bool isValidCredit(const string& );
 
 		void reportCourse(_IO_FILE*) const;
-		//writeToFile(_IO_FILE*) const
+		void writeToFile(_IO_FILE*) const;
 		
 	private:
 		string CourseCode;
@@ -105,7 +105,7 @@ class record{
 		
 		//Need to check validity outside of the class
 		
-		//writeToFile(_IO_FILE*) const/
+		void writeToFile(_IO_FILE*) const;
 		//void reportRecord(_IO_FILE* ) const; 
 
 		bool operator==(const record& ) const;

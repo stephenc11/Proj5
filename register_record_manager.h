@@ -45,8 +45,8 @@ class recordManager{
 		bool canFindRecord(const record& ) const;
 		record retrieveRecord(const record& ) const;
 		
-		//saveFile(const string& ) const;
-		//loadFile(const string& ) const;
+		void saveFile() const;
+		void loadFile();
 
 		void rprtAllStudents() const;
 		void rprtAllCourses() const;

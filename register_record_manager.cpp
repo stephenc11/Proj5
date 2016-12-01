@@ -330,6 +330,17 @@ void recordManager::rprtAllCourses() const{
 
 void recordManager::rprtAllStudents(const string& _str) const{
 	
+	if (!canFindCourse(_str)){
+		cout <<"Course not exist"<<endl;
+		cout<<endl;
+		cout <<"Hit ENTER to continue..."<<endl;
+
+		string s;
+		getline(cin, s);
+
+		return;
+	}
+
 	FILE* myfile;
 	string filename = _str + ".html";
 	myfile = fopen(filename.c_str(), "w+");
@@ -392,6 +403,17 @@ void recordManager::rprtAllStudents(const string& _str) const{
 
 void recordManager::rprtAllCourses(const string& _str) const{
 	
+	if (!canFindStudent(_str)){
+		cout <<"Student not exist"<<endl;
+		cout<<endl;
+		cout <<"Hit ENTER to continue..."<<endl;
+
+		string s;
+		getline(cin, s);
+
+		return;
+	}
+
 	FILE* myfile;
 	string filename = _str + ".html";
 	myfile = fopen(filename.c_str(), "w+");
@@ -450,6 +472,129 @@ void recordManager::rprtAllCourses(const string& _str) const{
 	cout <<"Hit ENTER to continue..."<<endl;
 
 	string s;
+	getline(cin, s);
+
+	return;
+}
+
+void recordManager::saveFile() const{
+
+	cout<<"Enter the file name: ";
+	string s;
+	getline(cin, s);
+
+	FILE* myfile;
+	myfile = fopen(s.c_str(), "w+");
+
+	if (myfile == NULL){
+		cout <<"Error: Write File Error"<<endl;
+		cout<<endl;
+		cout <<"Hit ENTER to continue..."<<endl;
+
+		getline(cin, s);
+
+		return;
+	}
+
+	list<student> stu_temp(stu_container.getAll());
+	list<course> crs_temp(crs_container.getAll());
+
+	list<student>::const_iterator stu_itr;
+	list<course>::const_iterator crs_itr;
+	list<record>::const_iterator rcd_itr;
+
+	stu_itr = stu_temp.begin();
+	crs_itr = crs_temp.begin();
+	rcd_itr = rcd_container.begin();
+
+	while(stu_itr != stu_temp.end()){
+		stu_itr->writeToFile(myfile);
+		stu_itr++;
+	}
+
+	fprintf(myfile,"\n");
+	while(crs_itr != crs_temp.end()){
+		crs_itr->writeToFile(myfile);
+		crs_itr++;
+	} 
+
+	fprintf(myfile,"\n");
+	while(rcd_itr != rcd_container.end()){
+		rcd_itr->writeToFile(myfile);
+		rcd_itr++;
+	}
+
+	cout <<"Saving Successful"<<endl;
+	cout<<endl;
+	cout <<"Hit ENTER to continue..."<<endl;
+
+	getline(cin, s);
+
+	return;
+}
+
+void recordManager::loadFile() {
+
+	cout<<"Enter the file name: ";
+	string s;
+	getline(cin, s);
+
+	ifstream fin;
+	fin.open(s.c_str());
+
+	if (!fin.is_open()){
+
+		cout <<"Error: Load File Error (File not exist / File Corrupted / Incorrect Format)"<<endl;
+		cout<<endl;
+		cout <<"Hit ENTER to continue..."<<endl;
+
+		getline(cin, s);
+
+		return;
+	}
+
+	string c_temp1, c_temp2, c_temp3, c_temp4;
+
+	while(1){
+		getline(fin,c_temp1);
+		if(c_temp1.size() != 0){
+			getline(fin,c_temp2);
+			getline(fin,c_temp3);
+			getline(fin,c_temp4);
+			student stu(c_temp1, c_temp2, c_temp3, c_temp4);
+			addStudent(stu);
+		}
+		else break;
+	}
+
+	while(1){
+		getline(fin,c_temp1);
+		if(c_temp1.size() != 0){
+			getline(fin,c_temp2);
+			getline(fin,c_temp3);
+			//getline(fin,c_temp4);
+			course crs(c_temp1, c_temp2, c_temp3);
+			addCourse(crs);
+		}
+		else break;
+	}
+
+	while(1){
+		getline(fin,c_temp1);
+		if(c_temp1.size() != 0){
+			getline(fin,c_temp2);
+			getline(fin,c_temp3);
+			//getline(fin,c_temp4);
+			record rcd(c_temp1, c_temp2, c_temp3);
+			addRecord(rcd);
+		}
+		else break;
+	}
+
+	cout <<"Loading Successful"<<endl;
+	cout<<endl;
+	cout <<"Hit ENTER to continue..."<<endl;
+
 	getline(cin, s);
 
 	return;
