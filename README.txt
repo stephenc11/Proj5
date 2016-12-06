@@ -9,9 +9,9 @@ Course Registration System
 AUTHOR
 --------------------------------------------------
 
-Name: CHEN, Yau Pun
+Name: CYP
 
-SID: 20317253
+SID: xxxxxxxxx
 
 
 COMPILATION
