@@ -48,7 +48,7 @@ Makefile:
 DESCRIPTION
 ---------------------------------------------------
 	
-	The overall design mostly follow from the sample 
+The overall design mostly follow from the sample 
 executable. Make use of the Data Structure list from 
 standard library and implement hashTable based on 
 list and vector containers in standard library. By 
@@ -61,7 +61,7 @@ standard library. Hash overflow is prevented by using
 long long type for suming and further more the algebraic
 properties of modulus.
 
-	The source code architecture is as followed: the high
+The source code architecture is as followed: the high
 level codes that dealt with user input, terminal output
 and FILE IO are mainly implemented in register_menu which
 is reponsible for the control flow and exception handling
@@ -75,20 +75,20 @@ record manager which provides both high level and low
 level functions like entry existence checking, html report 
 generating and database input/output.
 
-	The hashTable design mainly mimic the API of unordered
+The hashTable design mainly mimic the API of unordered
 map in standard library and also provides some other functions
 that facilitate the implementation of the program. For 
 example, iterator operation are mostly handled internally
 and list of object copies will be return if Find()
 functions are called.
 
-	The register entries mostly comprise the information for
+The register entries mostly comprise the information for
 different entries like student, course, course selection
 and also static functions for call to do input validity 
 checking. Index classes are implemented with an iterator 
 to record container and an key for lookup.
 
-	The register record manager mostly manipulate the data
+The register record manager mostly manipulate the data
 storage of the runtime. The register menu mostly provide
 the Interface and logic flow needed for user input and output
 with the help of utilities implemented as members of register 
